@@ -2,7 +2,11 @@
 {
     'name': "Real Estate Managment",
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
+    'summary': """
+A complete Real Estate Management module for managing properties, units, owners, and tenants efficiently.
+Track property availability, sales, rentals, contracts, and related financial transactions in one place.
+Designed to simplify real estate operations and provide clear, organized property management workflows.
+""",
 
     'description': """
 Long description of module's purpose
