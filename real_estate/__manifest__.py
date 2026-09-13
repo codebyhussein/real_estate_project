@@ -22,17 +22,21 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','crm'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+    'security/ir.model.access.csv',
+    'views/property_views.xml',
+    'views/lease_view.xml',
+    'views/tenant.xml',
+    'views/menu.xml',
+      
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
+
     ],
 }
 
