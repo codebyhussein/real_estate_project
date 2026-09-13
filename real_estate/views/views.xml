@@ -3,7 +3,7 @@
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="real_estate.list">
-      <field name="name">real_estate list</field>
+      <field name="name">real_estate list</field> disscription
       <field name="model">real_estate.real_estate</field>
       <field name="arch" type="xml">
         <tree>

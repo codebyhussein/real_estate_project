@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<record id="leses_view_tree" model="ir.ui.view">
+    <field name="name">lease.tree</field>
+    <field name="model">real_estate.lease</field>
+    <field name="arch" type="xml">
+        <tree string="Leases">
+            <field name="name"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="monthly_rent"/>
+
+ 
+        </tree>
+    </field>
+
+</record>
+
+<record id="leses_info_action" model="ir.actions.act_window">
+    <field name="name">Leases Info</field>
+    <field name="res_model">real_estate.lease</field>
+    <field name="view_mode">tree,form</field>
+    
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Create your first lease info
+        </p>
+    </field>
+
+   </record>
+
+</odoo>
+
