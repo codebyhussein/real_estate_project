@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+   
 
     <!-- Tenant List View (Tree) -->
     <record id="view_tenant_tree" model="ir.ui.view">
         <field name="name">real_estate.tenant.tree</field>
         <field name="model">real_estate.tenant</field>
         <field name="arch" type="xml">
+
+
             <tree string="Tenants">
+                
                 <field name="name" />
                 <field name="email" />
                 <field name="mobile" />
@@ -26,7 +30,9 @@
             <form string="Tenant">
                 <header>
 
-                    <button name="update_notes" string="Update Notes" type="object"
+                    <button name="get_lead_name" string="Get Lead Name" type="object"
+                        class="oe_highlight" />
+                    <button name="get_lead_website" string="Get Lead Website" type="object"
                         class="oe_highlight" />
                 </header>
 
@@ -48,7 +54,7 @@
                         <group string="Additional Information">
                             <field name="date_joined" />
                             <field name="active" />
-                            <field name="crm_id" />
+                            <field name="led_id" />
                         </group>
                     </group>
 

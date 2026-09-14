@@ -18,7 +18,7 @@ class Tenant(models.Model):
     notes = fields.Text(string='Notes')
     active = fields.Boolean(string='Active', default=True) 
   
-    crm_id= fields.Many2one('crm.lead', string='CRM Lead',)
+    led_id= fields.Many2one('crm.lead', string='CRM Lead',)
 
 
 
@@ -26,3 +26,22 @@ class Tenant(models.Model):
         """Update the notes field with a new note"""
         for record in self:
             record.write({'notes': record.name})
+
+    
+    def get_lead_name(self,):
+        """Update the notes field with a new note"""
+        for record in self:
+            record.write({'notes': record.led_id.name})
+
+
+
+
+
+
+    def get_lead_website(self):
+        for record in self:
+            if record.led_id.website:
+                record.write({'notes': record.led_id.website})
+            else:
+                record.write({'notes': record.led_id.email_from})
+  
