@@ -1,35 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Lease Tree View -->
+    <record id="lease_view_tree" model="ir.ui.view">
+        <field name="name">real_estate.lease.tree</field>
+        <field name="model">real_estate.lease</field>
+        <field name="arch" type="xml">
+            <tree string="Leases">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="monthly_rent" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
 
-<record id="leses_view_tree" model="ir.ui.view">
-    <field name="name">lease.tree</field>
-    <field name="model">real_estate.lease</field>
-    <field name="arch" type="xml">
-        <tree string="Leases">
-            <field name="name"/>
-            <field name="start_date"/>
-            <field name="end_date"/>
-            <field name="monthly_rent"/>
+    <!-- Lease Form View -->
+    <record id="lease_view_form" model="ir.ui.view">
+        <field name="name">real_estate.lease.form</field>
+        <field name="model">real_estate.lease</field>
+        <field name="arch" type="xml">
+            <form string="Lease">
 
- 
-        </tree>
-    </field>
+                <header>
+                    <button name="activate_lease" invisible="state == 'active'" string="Set to Active" type="object" class="oe_highlight "/>
+                    <button name="draft_lease" invisible="state == 'draft'" string="Set to Draft" type="object" class="oe_highlight"/>
 
-</record>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,at_risk,expired,cancelled"/>
+                </header>
 
-<record id="leses_info_action" model="ir.actions.act_window">
-    <field name="name">Leases Info</field>
-    <field name="res_model">real_estate.lease</field>
-    <field name="view_mode">tree,form</field>
-    
-    <field name="help" type="html">
-        <p class="o_view_nocontent_smiling_face">
-            Create your first lease info
-        </p>
-    </field>
+                <sheet>
 
-   </record>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Lease Reference..."/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Lease Information">
+                            <field name="tenant_id"/>
+                            <field name="property_id"/>
+                            <field name="monthly_rent" widget="monetary"/>
+                        </group>
+
+                        <group string="Lease Period">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+
+
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Lease Search View -->
+    <record id="lease_view_search" model="ir.ui.view">
+        <field name="name">real_estate.lease.search</field>
+        <field name="model">real_estate.lease</field>
+        <field name="arch" type="xml">
+            <search string="Search Leases">
+
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="state"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+
+                <separator/>
+
+                <filter name="filter_active" string="Active" domain="[('state', '=', 'active')]"/>
+
+                <filter name="filter_at_risk" string="At Risk" domain="[('state', '=', 'at_risk')]"/>
+
+                <filter name="filter_expired" string="Expired" domain="[('state', '=', 'expired')]"/>
+
+                <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+
+                <separator/>
+
+                <group expand="0" string="Group By">
+
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+
+                    <filter name="group_by_tenant" string="Tenant" context="{'group_by': 'tenant_id'}"/>
+
+                    <filter name="group_by_property" string="Property" context="{'group_by': 'property_id'}"/>
+
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    `kanban view for lease
+    <record id="lease_view_kanban" model="ir.ui.view">
+        <field name="name">real_estate.lease.kanban</field>
+        <field name="model">real_estate.lease</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_example">
+
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="monthly_rent"/>
+ ```xml
+<templates>
+    <t t-name="kanban-box">
+        <div class="oe_kanban_card oe_kanban_global_click">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <strong class="fs-5">
+                        <field name="name"/>
+                    </strong>
+                </div>
+
+                <div>
+                    <field name="state" widget="badge"/>
+                </div>
+            </div>
+
+            <hr class="my-2"/>
+
+            <!-- Tenant -->
+            <div class="mb-2">
+                <div class="text-muted small">
+                    Tenant
+                </div>
+                <div class="fw-bold">
+                    <field name="tenant_id"/>
+                </div>
+            </div>
+
+            <!-- Property -->
+            <div class="mb-2">
+                <div class="text-muted small">
+                    Property
+                </div>
+                <div class="fw-bold">
+                    <field name="property_id"/>
+                </div>
+            </div>
+
+            <!-- Dates -->
+            <div class="row mt-3">
+
+                <div class="col-6">
+                    <div class="text-muted small">
+                        Start Date
+                    </div>
+                    <div>
+                        <field name="start_date"/>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="text-muted small">
+                        End Date
+                    </div>
+                    <div>
+                        <field name="end_date"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-3 pt-2 border-top">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">
+                        Lease
+                    </span>
+
+                    <field name="state" widget="statusbar"/>
+                </div>
+            </footer>
+
+        </div>
+    </t>
+</templates>
+```
+
+            </kanban>
+        </field>        
+    </record>
+
+
+    <!-- Lease Action -->
+    <record id="lease_action" model="ir.actions.act_window">
+        <field name="name">Leases</field>
+        <field name="res_model">real_estate.lease</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="search_view_id" ref="lease_view_search"/>
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first lease!
+            </p>
+            <p>
+                Manage your property leases, tenants, rent,
+                and lease periods from one place.
+            </p>
+        </field>
+    </record>
 
 </odoo>
-

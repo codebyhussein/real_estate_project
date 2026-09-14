@@ -30,7 +30,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
-    'depends': ['crm'],
+    'depends': ['base', 'crm', 'mail'],
     'data': [
         'data/sequence_opportunity_crm_data.xml',
         'views/res_config_settings_views.xml',

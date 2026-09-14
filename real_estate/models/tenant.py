@@ -19,7 +19,12 @@ class Tenant(models.Model):
     active = fields.Boolean(string='Active', default=True) 
   
     led_id= fields.Many2one('crm.lead', string='CRM Lead',)
-
+    age_categroy = fields.Selection([
+        ('A', '20 - 40'),
+        ('B', '41 - 60'),
+        ('C', '61 - 80'),
+        ('D', '81 - 100')
+    ], string='Age Category',)
 
 
     def update_notes(self,):
@@ -45,3 +50,5 @@ class Tenant(models.Model):
             else:
                 record.write({'notes': record.led_id.email_from})
   
+
+

@@ -1,76 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-   
-
     <!-- Tenant List View (Tree) -->
     <record id="view_tenant_tree" model="ir.ui.view">
         <field name="name">real_estate.tenant.tree</field>
         <field name="model">real_estate.tenant</field>
         <field name="arch" type="xml">
-
-
             <tree string="Tenants">
-                
                 <field name="name" />
                 <field name="email" />
                 <field name="mobile" />
                 <field name="city" />
                 <field name="date_joined" />
-
-
             </tree>
         </field>
-    </record> ```xml     <!-- Tenant Form View -->
-<record
+    </record> 
+    
+    ```xml
+    <!--Tenant Form View -->
+    <record
         id="view_tenant_form" model="ir.ui.view">
         <field name="name">real_estate.tenant.form</field>
         <field name="model">real_estate.tenant</field>
         <field name="arch" type="xml">
             <form string="Tenant">
                 <header>
-
                     <button name="get_lead_name" string="Get Lead Name" type="object"
                         class="oe_highlight" />
                     <button name="get_lead_website" string="Get Lead Website" type="object"
                         class="oe_highlight" />
                 </header>
-
                 <sheet>
                     <h1>
                         <field name="name" placeholder="Tenant Name" size="40" string="Tenant Name"
                             label="Name" />
-
                     </h1>
-
-
                     <group string="Tenant Information">
                         <group>
                             <field name="email" />
                             <field name="mobile" />
                             <field name="city" />
-                        </group>
 
+                        </group>
                         <group string="Additional Information">
                             <field name="date_joined" />
                             <field name="active" />
                             <field name="led_id" />
+                            <field name='age_categroy'/>
                         </group>
                     </group>
-
                     <notebook>
                         <page name="info" string="Info">
                             <group>
                                 <field name="notes" />
                             </group>
+ 
                         </page>
+                         
+                        
                     </notebook>
-
                 </sheet>
             </form>
         </field>
     </record>
-    ``` <!-- Tenant Kanban View -->
+
+
+        <!-- Tenant Search View -->
+    <record id="view_tenant_search" model="ir.ui.view">
+        <field name="name">real_estate.tenant.search</field>
+        <field name="model">real_estate.tenant</field>
+        <field name="arch" type="xml">
+            <search string="Search Tenants">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <separator/>
+                <filter string="Available" name="available" domain="[('active', '=', True)]"/>
+                <filter string="Unavailable" name="unavailable" domain="[('active', '=', False)]"/>
+                
+                <separator/>
+                <group expand="0" string="Group By">
+                    <!-- <filter string="Available" name="group_by_available" context="{'group_by': 'available'}"/> -->
+                    <filter string="Age Category" name="group_by_age_category" context="{'group_by': 'age_categroy'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+    ```
+    <!-- Tenant Kanban View -->
     <record id="view_tenant_kanban" model="ir.ui.view">
         <field name="name">real_estate.tenant.kanban</field>
         <field name="model">real_estate.tenant</field>
@@ -89,7 +106,8 @@
                                 <div class="mt-1">
                                     <field name="email" widget="email" />
                                 </div>
-                                <div class="text-muted mt-1"> Joined: <field name="date_joined" />
+                                <div class="text-muted mt-1"> Joined:
+                                    <field name="date_joined" />
                                 </div>
                             </div>
                         </div>
@@ -98,8 +116,6 @@
             </kanban>
         </field>
     </record>
-
-
     <!-- Tenant action -->
     <record
         id="action_tenant" model="ir.actions.act_window">
