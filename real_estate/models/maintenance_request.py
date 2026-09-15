@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields,api
 
 class MaintenanceRequest(models.Model):
     _name = 'maintenance.request'
@@ -28,3 +28,11 @@ class MaintenanceRequest(models.Model):
     scheduled_date = fields.Date()
     completion_date = fields.Date()
     actual_cost = fields.Float()
+
+
+    @api.model
+    def create(self, vals):
+        """Override create to generate lease reference"""
+        # if vals.get('name', 'New') == 'New':
+        vals['name'] = self.env['ir.sequence'].next_by_code('real_estate.lease')
+        return super(MaintenanceRequest, self).create(vals)

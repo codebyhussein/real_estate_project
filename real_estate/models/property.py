@@ -1,7 +1,9 @@
 
 from re import A
 
+
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 class Property(models.Model):
     _name = 'real_estate.property'
@@ -63,6 +65,13 @@ class Property(models.Model):
     def get_agent_name(self):
          for record in self:
 
-                record.write({'description': record.agent_id.name}) 
+                record.write({'description': record.agent_id.name})  # pyright: ignore[reportAttributeAccessIssue]
+
+    
+
+    def write(self, vals):
+         if vals.get('available')==False:
+            raise UserError("You cannot edit bedrooms when they are unavailable.")
+         return super(Property,self).write(vals)
 
     

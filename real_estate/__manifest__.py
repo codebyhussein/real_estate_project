@@ -22,14 +22,16 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','crm'],
+    'depends': ['base','crm', 'mail',],
 
     # always loaded
     'data': [
     'security/ir.model.access.csv',
+    'data/ir_sequence_data.xml',
     'views/property_views.xml',
     'views/lease_view.xml',
-    'views/tenant.xml',
+    'views/tenant_view.xml',
+    'views/crm_led_view.xml',
     'views/menu.xml',
       
     ],
@@ -38,5 +40,5 @@ Long description of module's purpose
         'demo/demo.xml',
 
     ],
-}
+} # type: ignore
 

@@ -45,7 +45,7 @@ class Tenant(models.Model):
 
     def get_lead_website(self):
         for record in self:
-            if record.led_id.website:
+            if record.led_id.website: # type: ignore
                 record.write({'notes': record.led_id.website})
             else:
                 record.write({'notes': record.led_id.email_from})
