@@ -20,14 +20,14 @@
         action="lease_action"
         sequence="20"/>
 
-
- 
-
-
         <!-- Tenants Menu -->
     <menuitem id="menu_tenant"
                 name="Tenants"
                 parent="menu_real_estate_root"
                 action="action_tenant"
                 sequence="20"/>
+
+
+
+
 </odoo>

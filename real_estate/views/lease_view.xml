@@ -13,6 +13,7 @@
                 <field name="start_date" />
                 <field name="end_date" />
                 <field name="monthly_rent" widget="monetary" />
+                <field name = 'user_id'/>
             </tree>
         </field>
     </record>
@@ -54,6 +55,7 @@
                         <group string="Lease Period">
                             <field name="start_date" />
                             <field name="end_date" />
+                             <field name = 'user_id'/>
                         </group>
                     </group>
 

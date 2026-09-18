@@ -25,9 +25,10 @@
             <form string="Tenant">
                 <header>
                     <button name="get_lead_name" string="Get Lead Name" type="object"
-                        class="oe_highlight" />
+                        class="oe_highlight" groups='real_estate.user_tenant_rule' />
+                        
                     <button name="get_lead_website" string="Get Lead Website" type="object"
-                        class="oe_highlight" />
+                        class="oe_highlight" groups='real_estate.manager_tenant_rule'/>
                 </header>
                 <sheet>
                     <h1>
@@ -46,6 +47,7 @@
                             <field name="active" />
                             <field name="led_id" />
                             <field name='age_categroy'/>
+                            <field name='user_id' />
                         </group>
                     </group>
                     <notebook>

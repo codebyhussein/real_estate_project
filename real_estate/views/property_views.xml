@@ -30,7 +30,7 @@
             <form string="Property">
 
                 <header>
-                    <button name="mark_as_occupied" string="Mark as Occupied" type="object"
+                    <button name="mark_as_occupied" string="Mark as Occupied" type="object" groups="real_estate.group_property_manager"
                         invisible="not available" class="oe_highlight" />
                     <button name="mark_as_available" string="Mark as Available" type="object"
                         invisible="available" class="oe_highlight" />
@@ -63,7 +63,7 @@
                         <group>
                             <field name="price" invisible="not available" />
                             <field name="deposit" string="Deposit Amount" />
-                            <!-- <field name="agent_id"/> -->
+                            <field name="agent_id"/>
 
                         </group>
                     </group>
@@ -148,6 +148,10 @@
             </search>
         </field>
     </record>
+
+
+
+
 
     <!-- Property Action (Links views together) -->
     <record id="action_property" model="ir.actions.act_window">
