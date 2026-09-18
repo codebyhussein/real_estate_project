@@ -33,12 +33,17 @@ class Lease(models.Model):
         ('cancelled', 'Cancelled'),
     ], string='Status', default='draft', required=True)
 
+    user_id=fields.Many2one('res.users',string='User Id')
+    
+
 
 
     def activate_lease(self):
         """Activate the lease agreement"""
-        for record in self:
-            record.write({'state': 'active'})
+        if self.env.user.has_group('real_estate.group_tenant_manager'):
+           raise UserError('u cannot edit')
+           for record in self: 
+               record.write({'state': 'active'})
 
 
     def draft_lease(self):
@@ -62,6 +67,25 @@ class Lease(models.Model):
         default = dict(default or {}) 
         default['name'] = self.env['ir.sequence'].next_by_code( 'real_estate.lease' ) 
         return super().copy(default)
+
+
+    
+    def write(self,vals):
+        if not self.env.user.has_group('real_estate.group_lease_manager'):
+            raise UserError('U Are Not A manager Please Try again')
+         
+        return super(Lease(),self).write(vals)
+
+
+    def unlink(self): 
+        if not self.env.user.has_group( 'real_estate_group_lease_manager' ): 
+            raise UserError(_("Only Lease Managers can delete leases."))
+        return super().unlink()
+            
+        
+        
+            
+
  
 
      

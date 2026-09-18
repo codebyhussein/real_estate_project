@@ -69,9 +69,9 @@ class Property(models.Model):
 
     
 
-    def write(self, vals):
-         if vals.get('available')==False:
-            raise UserError("You cannot edit bedrooms when they are unavailable.")
-         return super(Property,self).write(vals)
+    # def write(self, vals):
+    #      if vals.get('available')==False :
+    #         raise UserError("You cannot edit bedrooms when they are unavailable.")
+    #      return super(Property,self).write(vals)
 
     
