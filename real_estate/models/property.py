@@ -74,4 +74,18 @@ class Property(models.Model):
     #         raise UserError("You cannot edit bedrooms when they are unavailable.")
     #      return super(Property,self).write(vals)
 
-    
+    def action_open_lease_wizard(self):
+       self.ensure_one()
+
+       return {
+        'type': 'ir.actions.act_window',
+        'name': 'Create Lease',
+        'res_model': 'real_estate.lease.wizard',
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_property_id': self.id,
+            'default_monthly_rent': self.price,
+            'default_user_id': self.env.user.id,
+        },
+    }

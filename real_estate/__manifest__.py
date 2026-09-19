@@ -28,11 +28,15 @@ Long description of module's purpose
     'data': [
    'security/security_rules.xml',
     'security/ir.model.access.csv',
+
     'data/ir_sequence_data.xml',
+    'wizard/maintenance.xml',
+    'wizard/lease_wizard.xml',
     'views/property_views.xml',
     'views/lease_view.xml',
     'views/tenant_view.xml',
     'views/crm_led_view.xml',
+    'views/maintanace_view.xml',
     'views/menu.xml',
       
     ],
