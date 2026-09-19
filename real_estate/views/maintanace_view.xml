@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Maintenance Tree View -->
+    <record id="maintenance_request_view_tree" model="ir.ui.view">
+        <field name="name">maintenance.request.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <tree string="Maintenance Requests">
+                <field name="name"/>
+                <field name="lease_id"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="issue_type"/>
+                <field name="urgency"/>
+                <field name="assigned_to"/>
+                <field name="scheduled_date"/>
+                <field name="completion_date"/>
+                <field name="actual_cost"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Maintenance Form View -->
+    <record id="maintenance_request_view_form" model="ir.ui.view">
+        <field name="name">maintenance.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request">
+
+                <sheet>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+
+                        <group string="Property Information">
+                            <field name="lease_id"/>
+                            <field name="tenant_id" readonly="1"/>
+                            <field name="property_id" readonly="1"/>
+                        </group>
+
+                        <group string="Maintenance Information">
+                            <field name="issue_type"/>
+                            <field name="urgency"/>
+                            <field name="assigned_to"/>
+                        </group>
+
+                    </group>
+
+                    <group string="Problem Description">
+                        <field name="description"
+                               placeholder="Describe the maintenance issue..."/>
+                    </group>
+
+                    <group string="Schedule &amp; Cost">
+
+                        <group>
+                            <field name="scheduled_date"/>
+                            <field name="completion_date"/>
+                        </group>
+
+                        <group>
+                            <field name="actual_cost"/>
+                        </group>
+
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Maintenance Search View -->
+    <record id="maintenance_request_view_search" model="ir.ui.view">
+        <field name="name">maintenance.request.search</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+
+            <search string="Search Maintenance Requests">
+
+                <field name="name"/>
+                <field name="lease_id"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="issue_type"/>
+                <field name="urgency"/>
+                <field name="assigned_to"/>
+
+                <separator/>
+
+                <filter
+                    name="high_urgency"
+                    string="High"
+                    domain="[('urgency', '=', 'high')]"
+                />
+
+                <filter
+                    name="emergency"
+                    string="Emergency"
+                    domain="[('urgency', '=', 'emergency')]"
+                />
+
+                <filter
+                    name="scheduled"
+                    string="Scheduled"
+                    domain="[('scheduled_date', '!=', False)]"
+                />
+
+                <filter
+                    name="completed"
+                    string="Completed"
+                    domain="[('completion_date', '!=', False)]"
+                />
+
+                <group expand="0" string="Group By">
+
+                    <filter
+                        name="group_lease"
+                        string="Lease"
+                        context="{'group_by': 'lease_id'}"
+                    />
+
+                    <filter
+                        name="group_property"
+                        string="Property"
+                        context="{'group_by': 'property_id'}"
+                    />
+
+                    <filter
+                        name="group_tenant"
+                        string="Tenant"
+                        context="{'group_by': 'tenant_id'}"
+                    />
+
+                    <filter
+                        name="group_issue_type"
+                        string="Issue Type"
+                        context="{'group_by': 'issue_type'}"
+                    />
+
+                    <filter
+                        name="group_urgency"
+                        string="Urgency"
+                        context="{'group_by': 'urgency'}"
+                    />
+
+                    <filter
+                        name="group_assigned_to"
+                        string="Assigned To"
+                        context="{'group_by': 'assigned_to'}"
+                    />
+
+                </group>
+
+            </search>
+
+        </field>
+    </record>
+
+
+    <!-- Maintenance Action -->
+    <record id="action_maintenance_request" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="maintenance_request_view_search"/>
+    </record>
+
+
+    <!-- Maintenance Menu -->
+    <menuitem
+        id="maintenance_menu_root"
+        name="Maintenance"
+        sequence="30"
+    />
+
+    <menuitem
+        id="maintenance_menu_request"
+        name="Maintenance Requests"
+        parent="maintenance_menu_root"
+        action="action_maintenance_request"
+        sequence="10"
+    />
+
+</odoo>
