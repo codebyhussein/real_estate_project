@@ -5,7 +5,8 @@
         <field name="name">real_estate.property.tree</field>
         <field name="model">real_estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Properties" decoration-info="property_type == 'apartment'" decoration-warning="property_type == 'villa'">
+            <tree string="Properties" decoration-info="property_type == 'apartment'"
+                decoration-warning="property_type == 'villa'">
                 <field name="name" />
 
                 <field name="price" />
@@ -15,7 +16,7 @@
                 <field name="create_date" />
                 <field name="create_uid" />
                 <field name="agent_id" />
-                <field name="property_type"/>
+                <field name="property_type" />
 
 
             </tree>
@@ -30,7 +31,8 @@
             <form string="Property">
 
                 <header>
-                    <button name="mark_as_occupied" string="Mark as Occupied" type="object" groups="real_estate.group_property_manager"
+                    <button name="mark_as_occupied" string="Mark as Occupied" type="object"
+                        groups="real_estate.group_property_manager"
                         invisible="not available" class="oe_highlight" />
                     <button name="mark_as_available" string="Mark as Available" type="object"
                         invisible="available" class="oe_highlight" />
@@ -43,7 +45,21 @@
                         class="oe_highlight" />
                     <button name="get_agent_name" string="Get Agent Name" type="object"
                         class="oe_highlight" />
+
                     <field name="available" invisible="1" />
+                    <!-- <button name="%(real_estate.action_lease_wizard)d"
+                        string="Create Lease" type="action"
+                        context="{'default_property_id': active_id,
+                        'default_user_id': uid,
+      
+                        
+                        }" invisible= "not available" /> -->
+
+                        <button name="action_open_lease_wizard"
+        string="Create Lease"
+        type="object"
+        invisible="not available"/>
+
 
                 </header>
 
@@ -61,17 +77,17 @@
 
                         </group>
                         <group>
-                            <field name="price" invisible="not available" />
+                            <field name="price" />
                             <field name="deposit" string="Deposit Amount" />
-                            <field name="agent_id"/>
+                            <field name="agent_id" />
 
                         </group>
                     </group>
                     <group>
                         <group>
-                            <field name="bedrooms"  />
+                            <field name="bedrooms" />
                             <field name="create_date" />
-                            <field name="create_uid"/>
+                            <field name="create_uid" />
                         </group>
                     </group>
                     <notebook>
@@ -148,9 +164,6 @@
             </search>
         </field>
     </record>
-
-
-
 
 
     <!-- Property Action (Links views together) -->
