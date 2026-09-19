@@ -32,8 +32,15 @@
                     <button name="draft_lease" invisible="state == 'draft'" string="Set to Draft"
                         type="object" class="oe_highlight" />
 
+                      <button name="%(real_estate.action_maintenance_request_wizard)d" 
+                      string="Maintenance Request" 
+                      type="action" context="{'default_lease_id': active_id}" 
+                      invisible="state != 'active'"/>
+
                     <field name="state" widget="statusbar"
                         statusbar_visible="draft,active,at_risk,expired,cancelled" />
+
+                    
                 </header>
 
                 <sheet>

@@ -40,10 +40,11 @@ class Lease(models.Model):
 
     def activate_lease(self):
         """Activate the lease agreement"""
-        if self.env.user.has_group('real_estate.group_tenant_manager'):
-           raise UserError('u cannot edit')
-           for record in self: 
-               record.write({'state': 'active'})
+        # if self.env.user.has_group('real_estate.group_tenant_manager'):
+        #    raise UserError('u cannot edit')
+        for record in self: 
+            
+            record.write({'state': 'active'})
 
 
     def draft_lease(self):
@@ -70,11 +71,11 @@ class Lease(models.Model):
 
 
     
-    def write(self,vals):
-        if not self.env.user.has_group('real_estate.group_lease_manager'):
-            raise UserError('U Are Not A manager Please Try again')
+    # def write(self,vals):
+    #     if not self.env.user.has_group('real_estate.group_lease_manager'):
+    #         raise UserError('U Are Not A manager Please Try again')
          
-        return super(Lease(),self).write(vals)
+    #     return super(Lease(),self).write(vals)
 
 
     def unlink(self): 
