@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tenant_wizard_form" model="ir.ui.view">
+        <field name="name">real.estate.tenant.wizard.form</field>
+        <field name="model">real_estate.tenant.wizard</field>
+
+        <field name="arch" type="xml">
+            <form string="Create Tenant">
+
+                <sheet>
+
+                    <group string="Tenant Information">
+
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                        </group>
+
+                        <group>
+                            <field name="city"/>
+                            <field name="date_of_birth"/>
+                            <field name="age_categroy"/>
+                            <field name="user_id"/>
+                        </group>
+
+                    </group>
+
+                    <group string="CRM Information">
+                        <field name="led_id" />
+                    </group>
+
+                    <group string="Notes">
+                        <field name="notes"/>
+                    </group>
+
+                </sheet>
+
+                <footer>
+
+                    <button
+                        name="create_tenant"
+                        string="Create Tenant"
+                        type="object"
+                        class="btn-primary"
+                    />
+
+                    <button
+                        string="Cancel"
+                        special="cancel"
+                        class="btn-secondary"
+                    />
+
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tenant_wizard" model="ir.actions.act_window">
+        <field name="name">Create Tenant</field>
+        <field name="res_model">real_estate.tenant.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

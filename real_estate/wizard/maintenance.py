@@ -51,7 +51,7 @@ class MaintenanceRequestWizard(models.TransientModel):
         #         note=f"Urgency: {self.urgency}\nDescription: {self.description}"
         #     )
         
-        # 3. Return action to close wizard and show confirmation
+        # # 3. Return action to close wizard and show confirmation
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
@@ -61,5 +61,15 @@ class MaintenanceRequestWizard(models.TransientModel):
                 'type': 'success',
                 'sticky': False,
                 'next': {'type': 'ir.actions.act_window_close'},
-            },
-        }
+            },}
+        
+            
+        # }
+        #         # 4. Opening a Created Record
+        # return {
+        #     'type': 'ir.actions.act_window',
+        #     'res_model': 'maintenance.request',
+        #     'res_id': maintenance_request.id,
+        #     'views': [(False, 'form')],
+        #     'target': 'current',
+        # }

@@ -66,7 +66,7 @@ class LeaseWizard(models.TransientModel):
         self.ensure_one()
 
         lease = self.env['real_estate.lease'].create({
-            # 'name': self.name,
+            'name': self.name,
             'property_id': self.property_id.id,
             'tenant_id': self.tenant_id.id,
             'start_date': self.start_date,
@@ -85,5 +85,6 @@ class LeaseWizard(models.TransientModel):
             'message': 'Lease created successfully.',
             'type': 'success',
             'sticky': False,
+             'next': {'type': 'ir.actions.act_window_close'},
         }
         }
