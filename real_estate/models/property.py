@@ -8,6 +8,8 @@ from odoo.exceptions import UserError
 class Property(models.Model):
     _name = 'real_estate.property'
     _description = 'Real Estate Property'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    
 
     name = fields.Char(string='Property Name', required=True, index=True)
     description = fields.Text(string='Description')
@@ -23,6 +25,7 @@ class Property(models.Model):
         ('commercial', 'Commercial'),
     ], string='Property Type', required=True)
     deposit = fields.Float(required=True)
+    lease_ids =fields.One2many('real_estate.lease','property_id' ,string='Leases')
 
 
     def mark_as_occupied(self):
@@ -74,18 +77,18 @@ class Property(models.Model):
     #         raise UserError("You cannot edit bedrooms when they are unavailable.")
     #      return super(Property,self).write(vals)
 
-    def action_open_lease_wizard(self):
-       self.ensure_one()
+    # def action_open_lease_wizard(self):
+    #    self.ensure_one()
 
-       return {
-        'type': 'ir.actions.act_window',
-        'name': 'Create Lease',
-        'res_model': 'real_estate.lease.wizard',
-        'view_mode': 'form',
-        'target': 'new',
-        'context': {
-            'default_property_id': self.id,
-            'default_monthly_rent': self.price,
-            'default_user_id': self.env.user.id,
-        },
-    }
+    #    return {
+    #     'type': 'ir.actions.act_window',
+    #     'name': 'Create Lease',
+    #     'res_model': 'real_estate.lease.wizard',
+    #     'view_mode': 'form',
+    #     'target': 'new',
+    #     'context': {
+    #         'default_property_id': self.id,
+    #         'default_monthly_rent': self.price,
+    #         'default_user_id': self.env.user.id,
+    #     },
+    # }

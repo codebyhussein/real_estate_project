@@ -32,8 +32,12 @@ Long description of module's purpose
     'data/ir_sequence_data.xml',
     'wizard/maintenance.xml',
     'wizard/lease_wizard.xml',
+    'wizard/tenant_wizard.xml',
     'views/property_views.xml',
+    'views/property_inherit.xml',
+    
     'views/lease_view.xml',
+   'views/lease_inherit.xml',
     'views/tenant_view.xml',
     'views/crm_led_view.xml',
     'views/maintanace_view.xml',

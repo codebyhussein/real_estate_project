@@ -34,6 +34,7 @@ class Lease(models.Model):
     ], string='Status', default='draft', required=True)
 
     user_id=fields.Many2one('res.users',string='User Id')
+    maintenance_request_ids=fields.One2many('maintenance.request','lease_id',string='Maintenances Request')
     
 
 
@@ -79,7 +80,7 @@ class Lease(models.Model):
 
 
     def unlink(self): 
-        if not self.env.user.has_group( 'real_estate_group_lease_manager' ): 
+        if not self.env.user.has_group( 'real_estate.group_lease_manager' ): 
             raise UserError(_("Only Lease Managers can delete leases."))
         return super().unlink()
             

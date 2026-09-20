@@ -6,7 +6,7 @@ class MaintenanceRequest(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     
     name = fields.Char()
-    lease_id = fields.Many2one('real_estate.lease')
+    lease_id = fields.Many2one('real_estate.lease',)
     tenant_id = fields.Many2one(related='lease_id.tenant_id', store=True)
     property_id = fields.Many2one(related='lease_id.property_id', store=True)
     
