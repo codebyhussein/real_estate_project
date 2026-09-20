@@ -13,7 +13,7 @@
                 <field name="start_date" />
                 <field name="end_date" />
                 <field name="monthly_rent" widget="monetary" />
-                <field name = 'user_id'/>
+                <field name='user_id' />
             </tree>
         </field>
     </record>
@@ -32,15 +32,15 @@
                     <button name="draft_lease" invisible="state == 'draft'" string="Set to Draft"
                         type="object" class="oe_highlight" />
 
-                      <button name="%(real_estate.action_maintenance_request_wizard)d" 
-                      string="Maintenance Request" 
-                      type="action" context="{'default_lease_id': active_id}" 
-                      invisible="state != 'active'"/>
+                    <button name="%(real_estate.action_maintenance_request_wizard)d"
+                        string="Maintenance Request"
+                        type="action" context="{'default_lease_id': active_id}"
+                        invisible="state != 'active'" />
 
                     <field name="state" widget="statusbar"
                         statusbar_visible="draft,active,at_risk,expired,cancelled" />
 
-                    
+
                 </header>
 
                 <sheet>
@@ -62,11 +62,27 @@
                         <group string="Lease Period">
                             <field name="start_date" />
                             <field name="end_date" />
-                             <field name = 'user_id'/>
+                            <field name='user_id' />
                         </group>
                     </group>
 
-
+                    <notebook>
+                        <page string="Maintenance Requests">
+                            <field name="maintenance_request_ids">
+                                <tree create="false" delete='false'>
+                                    <field name="name" />
+                                    <field name="issue_type" />
+                                    <field name="urgency" />
+                                    <field name="assigned_to" />
+                                    <field name="scheduled_date" />
+                                    <field name="completion_date" />
+                                    <field name="actual_cost" />
+                                    <field name="preferred_date" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" />
@@ -235,8 +251,5 @@
         </field>
     </record>
 
- 
 
-
-    
 </odoo>

@@ -12,6 +12,14 @@
 
         <header position="inside">
             <button name="get_name" string="Add Text" type="object" class="oe_highlight"/>
+
+        <button name="%(action_tenant_wizard)d"
+                        string="Create Tenant" type="action"
+                        context="{'default_led_id': active_id,
+                        'default_name':name,
+                        'default_email':email_from
+               
+                        }" />
         </header>
 
             <xpath expr="//field[@name='user_id']" position="before">

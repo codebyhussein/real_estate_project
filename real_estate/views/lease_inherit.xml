@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_maintenance_form_inherit_lease" model="ir.ui.view">
+        <field name="name">real_estate.maintenance.form.inherit.lease</field>
+        <field name="model">real_estate.lease</field>
+
+        <field name="inherit_id" ref="real_estate.lease_view_form"/>
+
+        <field name="arch" type="xml">
+
+            <!-- Create Smart Button Box -->
+            <xpath expr="//sheet" position="inside">
+
+                <div name="button_box" class="oe_button_box">
+
+                    <button
+                        name="action_view_maintenance"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o">
+
+                        <field
+                            name="maintenance_count"
+                            widget="statinfo"
+                            string="Maintenance Request"/>
+
+                    </button>
+
+                </div>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
