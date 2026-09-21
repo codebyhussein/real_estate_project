@@ -6,7 +6,8 @@ class PropertyInherit(models.Model):
 
     lease_count = fields.Integer(
         string='Leases',
-        compute='_compute_lease_count'
+        compute='_compute_lease_count',
+                store=True
     )
 
     @api.depends('lease_ids')
@@ -24,6 +25,7 @@ class PropertyInherit(models.Model):
             'view_mode': 'tree,form',
             'domain': [
                 ('property_id', '=', self.id)
+                
             ],
             'context': {
                 'default_property_id': self.id,

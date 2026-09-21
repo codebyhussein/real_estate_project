@@ -6,7 +6,8 @@ class LeaseInherit(models.Model):
 
     maintenance_count = fields.Integer(
         string='Maintenance Request',
-        compute='_compute_maintenance_count'
+        compute='_compute_maintenance_count',
+        store=True
     )
 
     @api.depends('maintenance_request_ids')
