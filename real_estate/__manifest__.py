@@ -24,26 +24,37 @@ Long description of module's purpose
     # any module necessary for this one to work correctly
     'depends': ['base','crm', 'mail',],
 
-    # always loaded
-    'data': [
-   'security/security_rules.xml',
+# always loaded
+'data': [
+    # Security
+    'security/security_rules.xml',
     'security/ir.model.access.csv',
 
+    # Data
     'data/ir_sequence_data.xml',
+    'data/lease_cron.xml',
+
+    # Wizards
     'wizard/maintenance.xml',
     'wizard/lease_wizard.xml',
     'wizard/tenant_wizard.xml',
+
+    # Views
     'views/property_views.xml',
     'views/property_inherit.xml',
-    
+
     'views/lease_view.xml',
-   'views/lease_inherit.xml',
+    'views/lease_inherit.xml',
+
     'views/tenant_view.xml',
+
     'views/crm_led_view.xml',
+
     'views/maintanace_view.xml',
+
+    # Menus
     'views/menu.xml',
-      
-    ],
+],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
