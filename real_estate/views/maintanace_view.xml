@@ -260,7 +260,18 @@
 
     </record>
 
-
+ 
+         <record id="ir_cron_auto_urgency" model="ir.cron">
+        <field name="name">Real Estate: Auto Urgency</field>
+        <field name="model_id" ref="model_maintenance_request"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_complete_maintenance_requests()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record> 
     <!-- =========================================================
          Maintenance Request Action
     ========================================================== -->
@@ -279,22 +290,6 @@
     </record>
 
 
-    <!-- =========================================================
-         Maintenance Menus
-    ========================================================== -->
-
-    <menuitem
-        id="maintenance_menu_root"
-        name="Maintenance"
-        sequence="30"
-    />
-
-    <menuitem
-        id="maintenance_menu_request"
-        name="Maintenance Requests"
-        parent="maintenance_menu_root"
-        action="action_maintenance_request"
-        sequence="10"
-    />
+ 
 
 </odoo>

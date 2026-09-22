@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =========================
+         Tree View
+    ========================== -->
+
+    <record id="view_lease_payment_tree" model="ir.ui.view">
+        <field name="name">lease.payment.tree</field>
+        <field name="model">lease.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Lease Payments">
+                <field name="name"/>
+                <field name="lease_id"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="due_date"/>
+                <field name="amount"/>
+                <field name="late_fee"/>
+                <field name="payment_date"/>
+                <field name="payment_method"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- =========================
+         Form View
+    ========================== -->
+
+    <record id="view_lease_payment_form" model="ir.ui.view">
+        <field name="name">lease.payment.form</field>
+        <field name="model">lease.payment</field>
+        <field name="arch" type="xml">
+            <form string="Lease Payment">
+
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,pending,paid,reconciled"
+                    />
+                </header>
+
+                <sheet>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Lease Information">
+                            <field name="lease_id"/>
+                            <field name="tenant_id"/>
+                            <field name="property_id"/>
+                        </group>
+
+                        <group string="Payment Information">
+                            <field name="due_date"/>
+                            <field name="amount"/>
+                            <field name="late_fee"/>
+                            <field name="late_fee_applied"/>
+                        </group>
+                    </group>
+
+                    <group string="Payment Details">
+                        <group>
+                            <field name="payment_date"/>
+                            <field name="payment_method"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <!-- <chatter>
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </chatter> -->
+
+            </form>
+        </field>
+    </record>
+
+    <!-- =========================
+         Search View
+    ========================== -->
+
+    <record id="view_lease_payment_search" model="ir.ui.view">
+        <field name="name">lease.payment.search</field>
+        <field name="model">lease.payment</field>
+        <field name="arch" type="xml">
+            <search string="Lease Payments">
+
+                <field name="name"/>
+                <field name="lease_id"/>
+                <field name="tenant_id"/>
+                <field name="property_id"/>
+                <field name="payment_method"/>
+                <field name="state"/>
+                <field name="due_date"/>
+
+                <separator/>
+
+                <filter
+                    name="draft"
+                    string="Draft"
+                    domain="[('state', '=', 'draft')]"
+                />
+
+                <filter
+                    name="pending"
+                    string="Pending"
+                    domain="[('state', '=', 'pending')]"
+                />
+
+                <filter
+                    name="paid"
+                    string="Paid"
+                    domain="[('state', '=', 'paid')]"
+                />
+
+                <filter
+                    name="reconciled"
+                    string="Reconciled"
+                    domain="[('state', '=', 'reconciled')]"
+                />
+
+                <separator/>
+
+                <filter
+                    name="unpaid"
+                    string="Unpaid"
+                    domain="[('state', 'in', ['draft', 'pending'])]"
+                />
+
+                <filter
+                    name="late_fee"
+                    string="Late Fee Applied"
+                    domain="[('late_fee_applied', '=', True)]"
+                />
+
+                <separator/>
+
+                <group string="Group By">
+                    <filter
+                        name="group_by_state"
+                        string="Status"
+                        context="{'group_by': 'state'}"
+                    />
+
+                    <filter
+                        name="group_by_lease"
+                        string="Lease"
+                        context="{'group_by': 'lease_id'}"
+                    />
+
+                    <filter
+                        name="group_by_tenant"
+                        string="Tenant"
+                        context="{'group_by': 'tenant_id'}"
+                    />
+
+                    <filter
+                        name="group_by_property"
+                        string="Property"
+                        context="{'group_by': 'property_id'}"
+                    />
+
+                    <filter
+                        name="group_by_payment_method"
+                        string="Payment Method"
+                        context="{'group_by': 'payment_method'}"
+                    />
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+     <record id="ir_cron_auto_paid_amount" model="ir.cron">
+        <field name="name">Real Estate: Auto Paid Amount</field>
+        <field name="model_id" ref="model_lease_payment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_paid_amount()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+        <!-- payment corn  -->
+        
+
+    <!-- =========================
+         Action
+    ========================== -->
+
+    <record id="action_lease_payment" model="ir.actions.act_window">
+        <field name="name">Lease Payments</field>
+        <field name="res_model">lease.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_lease_payment_search"/>
+    </record>
+
+</odoo>

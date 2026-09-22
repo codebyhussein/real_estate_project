@@ -30,6 +30,32 @@
 
             </xpath>
 
+        
+
+            <xpath expr="//notebook" position="inside">
+
+                <page name="payment_summary" string="Payment Summary">
+
+                    <group>
+
+                        <group string="Amounts by Payment Method">
+                            <field name="total_viza_amount" widget="monetary"/>
+                            <field name="total_cash_amount" widget="monetary"/>
+                            <field name="total_credit_card_amount" widget="monetary"/>
+                            <field name="total_check_amount" widget="monetary"/>
+                            <field name="total_other_amount" widget="monetary"/>
+                        </group>
+
+                        <group string="Overall Total">
+                            <field name="total_amount" widget="monetary"/>
+                        </group>
+
+                    </group>
+
+                </page>
+
+            </xpath>
+
         </field>
 
     </record>

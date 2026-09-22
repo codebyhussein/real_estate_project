@@ -43,5 +43,16 @@
         action="action_maintenance_request"
         sequence="40"
     />
+    
+
+
+    <!-- Payments -->
+    <menuitem
+        id="menu_payments"
+        name="Payments"
+        parent="menu_real_estate_root"
+        action="action_lease_payment"
+        sequence="50"
+    />
 
 </odoo>
