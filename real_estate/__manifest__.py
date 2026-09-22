@@ -51,6 +51,7 @@ Long description of module's purpose
     'views/crm_led_view.xml',
 
     'views/maintanace_view.xml',
+    'views/payment.xml',
 
     # Menus
     'views/menu.xml',

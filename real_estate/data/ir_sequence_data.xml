@@ -18,4 +18,12 @@
         <field name="padding">5</field>
     </record>
 
+    <!-- Payment Sequence -->
+    <record id="seq_real_estate_payment" model="ir.sequence">
+        <field name="name">Payment Sequence</field>
+        <field name="code">real_estate.payment</field>
+        <field name="prefix">PAY-</field>
+        <field name="padding">5</field>
+    </record>
+
 </odoo>
