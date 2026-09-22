@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Maintenance Tree View -->
+    <!-- =========================================================
+         Maintenance Request Tree View
+    ========================================================== -->
+
     <record id="maintenance_request_view_tree" model="ir.ui.view">
+
         <field name="name">maintenance.request.tree</field>
         <field name="model">maintenance.request</field>
+
         <field name="arch" type="xml">
             <tree string="Maintenance Requests">
+
                 <field name="name"/>
                 <field name="lease_id"/>
                 <field name="tenant_id"/>
@@ -14,77 +20,156 @@
                 <field name="issue_type"/>
                 <field name="urgency"/>
                 <field name="assigned_to"/>
+                <field name="preferred_date"/>
                 <field name="scheduled_date"/>
                 <field name="completion_date"/>
                 <field name="actual_cost"/>
+                <field name="state"/>
+
             </tree>
         </field>
+
     </record>
 
 
-    <!-- Maintenance Form View -->
+    <!-- =========================================================
+         Maintenance Request Form View
+    ========================================================== -->
+
     <record id="maintenance_request_view_form" model="ir.ui.view">
+
         <field name="name">maintenance.request.form</field>
         <field name="model">maintenance.request</field>
+
         <field name="arch" type="xml">
             <form string="Maintenance Request">
+
+                <header>
+
+                    <button
+                        name="action_start"
+                        string="Start"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="state != 'submitted'"
+                    />
+
+                    <button
+                        name="action_complete"
+                        string="Complete"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="state != 'in_progress'"
+                    />
+
+                    <button
+                        name="action_cancel"
+                        string="Cancel"
+                        type="object"
+                        invisible="state == 'cancelled' or state == 'completed'"
+                    />
+
+                    <button
+                        name="action_reset"
+                        string="Reset"
+                        type="object"
+                        invisible="state == 'submitted'"
+                    />
+
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="submitted,in_progress,completed,cancelled"
+                    />
+
+                </header>
 
                 <sheet>
 
                     <div class="oe_title">
+
                         <label for="name"/>
+
                         <h1>
                             <field name="name"/>
                         </h1>
+
                     </div>
 
                     <group>
 
                         <group string="Property Information">
+
                             <field name="lease_id"/>
                             <field name="tenant_id" readonly="1"/>
                             <field name="property_id" readonly="1"/>
+                            <field name="tenant_phone"/>
+
                         </group>
 
                         <group string="Maintenance Information">
+
                             <field name="issue_type"/>
                             <field name="urgency"/>
                             <field name="assigned_to"/>
+
                         </group>
 
                     </group>
 
                     <group string="Problem Description">
-                        <field name="description"
-                               placeholder="Describe the maintenance issue..."/>
+
+                        <field
+                            name="description"
+                            placeholder="Describe the maintenance issue..."
+                        />
+
                     </group>
 
                     <group string="Schedule &amp; Cost">
 
                         <group>
+
+                            <field name="preferred_date"/>
                             <field name="scheduled_date"/>
                             <field name="completion_date"/>
+
                         </group>
 
                         <group>
+
                             <field name="actual_cost"/>
+
                         </group>
 
                     </group>
 
                 </sheet>
 
+                <div class="oe_chatter">
+
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+
+                </div>
+
             </form>
         </field>
+
     </record>
 
 
-    <!-- Maintenance Search View -->
+    <!-- =========================================================
+         Maintenance Request Search View
+    ========================================================== -->
+
     <record id="maintenance_request_view_search" model="ir.ui.view">
+
         <field name="name">maintenance.request.search</field>
         <field name="model">maintenance.request</field>
-        <field name="arch" type="xml">
 
+        <field name="arch" type="xml">
             <search string="Search Maintenance Requests">
 
                 <field name="name"/>
@@ -94,6 +179,7 @@
                 <field name="issue_type"/>
                 <field name="urgency"/>
                 <field name="assigned_to"/>
+                <field name="state"/>
 
                 <separator/>
 
@@ -118,8 +204,10 @@
                 <filter
                     name="completed"
                     string="Completed"
-                    domain="[('completion_date', '!=', False)]"
+                    domain="[('state', '=', 'completed')]"
                 />
+
+                <separator/>
 
                 <group expand="0" string="Group By">
 
@@ -159,24 +247,42 @@
                         context="{'group_by': 'assigned_to'}"
                     />
 
+                    <filter
+                        name="group_state"
+                        string="Status"
+                        context="{'group_by': 'state'}"
+                    />
+
                 </group>
 
             </search>
-
         </field>
+
     </record>
 
 
-    <!-- Maintenance Action -->
+    <!-- =========================================================
+         Maintenance Request Action
+    ========================================================== -->
+
     <record id="action_maintenance_request" model="ir.actions.act_window">
+
         <field name="name">Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="maintenance_request_view_search"/>
+
+        <field
+            name="search_view_id"
+            ref="maintenance_request_view_search"
+        />
+
     </record>
 
 
-    <!-- Maintenance Menu -->
+    <!-- =========================================================
+         Maintenance Menus
+    ========================================================== -->
+
     <menuitem
         id="maintenance_menu_root"
         name="Maintenance"

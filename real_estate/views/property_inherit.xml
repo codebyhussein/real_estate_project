@@ -2,14 +2,13 @@
 <odoo>
 
     <record id="view_property_form_inherit_lease" model="ir.ui.view">
+
         <field name="name">real_estate.property.form.inherit.lease</field>
         <field name="model">real_estate.property</field>
-
         <field name="inherit_id" ref="real_estate.view_property_form"/>
 
         <field name="arch" type="xml">
 
-            <!-- Create Smart Button Box -->
             <xpath expr="//sheet" position="inside">
 
                 <div name="button_box" class="oe_button_box">
@@ -18,13 +17,13 @@
                         name="action_view_leases"
                         type="object"
                         class="oe_stat_button"
-                        icon="fa-file-text-o">
-
+                        icon="fa-file-text-o"
+                    >
                         <field
                             name="lease_count"
                             widget="statinfo"
-                            string="Leases"/>
-
+                            string="Leases"
+                        />
                     </button>
 
                 </div>
@@ -32,6 +31,7 @@
             </xpath>
 
         </field>
+
     </record>
 
 </odoo>
