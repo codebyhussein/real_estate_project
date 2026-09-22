@@ -19,6 +19,9 @@ class Lease(models.Model):
         string='Lease Reference',
         required=True,
         tracking=True,
+        default=lambda self: self.env['ir.sequence'].next_by_code(
+            'real_estate.lease'
+        ) or 'New',
     )
 
     property_id = fields.Many2one(
@@ -281,18 +284,18 @@ class Lease(models.Model):
     # Create / Copy / Delete
     # =========================================================
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        sequence = self.env['ir.sequence']
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     sequence = self.env['ir.sequence']
 
-        for vals in vals_list:
-            if not vals.get('name') or vals.get('name') == 'New':
-                vals['name'] = (
-                    sequence.next_by_code('real_estate.lease')
-                    or 'New'
-                )
+    #     for vals in vals_list:
+    #         if not vals.get('name') or vals.get('name') == 'New':
+    #             vals['name'] = (
+    #                 sequence.next_by_code('real_estate.lease')
+    #                 or 'New'
+    #             )
 
-        return super().create(vals_list)
+    #     return super().create(vals_list)
 
     def copy(self, default=None):
         default = dict(default or {})
@@ -345,3 +348,29 @@ class Lease(models.Model):
             record.appliance_cost = costs['appliance']
             record.other_cost = costs['other']
             record.total_cost = sum(costs.values())
+            
+                
+    def _cron_auto_expire_leases(self):
+        """Scheduled action - expire leases whose end date has passed"""
+        today = fields.Date.today()
+        expired_leases = self.search([
+            ('end_date', '<', today),
+        ])
+        for lease in expired_leases:
+            lease.write({'state': 'expired'})
+            
+            
+        # === VALIDATION ===
+    @api.constrains('start_date', 'end_date')
+    def _check_dates(self):
+        """Ensure end date is after start date"""
+        for record in self:
+            if record.start_date and record.end_date:
+                if record.end_date <= record.start_date:
+                    raise ValidationError("End date must be after start date")
+
+    _sql_constraints = [
+        ('email_unique', 'UNIQUE(email)', 'Email must be unique! This email is already registered.'),
+    ]
+
+

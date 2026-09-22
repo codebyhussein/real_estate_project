@@ -1,4 +1,5 @@
 from passlib import context
+from werkzeug.routing import ValidationError
 
 from odoo import models, fields, api
 
@@ -19,6 +20,11 @@ class Tenant(models.Model):
     active = fields.Boolean(string='Active', default=True)
     user_id = fields.Many2one('res.users', string='Related User', index=True)
     lease_ids =fields.One2many('real_estate.lease','tenant_id' ,string='Leases')
+    property_type= fields.Selection([
+        ('apartment', 'Apartment'),
+        ('house', 'House'),
+        ('commercial', 'Commercial'),
+        ('land', 'Land'),       ], string='Property Type',required=True) 
 
   
     led_id= fields.Many2one('crm.lead', string='CRM Lead',)
@@ -52,6 +58,38 @@ class Tenant(models.Model):
                 record.write({'notes': record.led_id.website})
             else:
                 record.write({'notes': record.led_id.email_from})
+                
+                    
+
+    @api.model
+    def _cron_create_tenant(self):
+        leads = self.env['crm.lead'].search([
+            ('property_type', '!=', False),
+        ], limit=1)
+
+        for lead in leads:
+            self.create({
+                'name': lead.name,
+                'email': lead.email_from,
+                'phone': lead.phone,
+                'mobile': lead.mobile,
+                'city': lead.city,
+                'led_id': lead.id,
+            })
+            
+            
+ 
+
+    @api.constrains('date_of_birth')
+    def _check_date_of_birth(self):
+        for record in self:
+            if record.date_of_birth < fields.Date.today():
+                raise ValidationError(
+                    'Date of birth cannot be in the future.'
+                )
+
+
+
   
 
 
