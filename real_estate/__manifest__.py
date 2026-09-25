@@ -22,7 +22,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','crm', 'mail',],
+    'depends': ['base','crm', 'mail','website'],
 
 # always loaded
 'data': [
@@ -53,6 +53,7 @@ Long description of module's purpose
     'views/portal_templates_maintainance.xml',
     'views/portal_templates_property.xml',
     'views/maintanace_view.xml',
+    'views/property_templates_website.xml',
     'views/payment.xml',
 
     # Menus
