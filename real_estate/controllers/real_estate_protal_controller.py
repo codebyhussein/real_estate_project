@@ -22,7 +22,7 @@
 from odoo import http
 from odoo.http import request
 from werkzeug.urls import url_quote
-from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.portal.controllers.portal import CustomerPortal # pyright: ignore[missing-import]
 
 class RealEstatePortal(CustomerPortal):
 
