@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- ========================================= -->
+    <!-- My Properties Page -->
+    <!-- ========================================= -->
+
+    <template
+        id="portal_my_properties"
+        name="Portal My Properties"
+    >
+
+        <t t-call="portal.portal_layout">
+
+            <div class="container mt16 o_portal_portlets">
+
+                <!-- ================================= -->
+                <!-- Header -->
+                <!-- ================================= -->
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <nav
+                            class="breadcrumb"
+                            aria-label="breadcrumb"
+                        >
+
+                            <ol class="breadcrumb">
+
+                                <li class="breadcrumb-item">
+
+                                    <a href="/my/home">
+                                        My Account
+                                    </a>
+
+                                </li>
+
+                                <li
+                                    class="breadcrumb-item active"
+                                    aria-current="page"
+                                >
+                                    My Properties
+                                </li>
+
+                            </ol>
+
+                        </nav>
+
+                        <h1 class="mb16">
+                            My Properties
+                        </h1>
+
+                        <p>
+                            Below are the properties assigned to you
+                            as Sales Person.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- Properties -->
+                <!-- ================================= -->
+
+                <t t-if="properties">
+
+                    <div class="row">
+
+                        <t
+                            t-foreach="properties"
+                            t-as="property"
+                        >
+
+                            <div class="col-md-6 mb16">
+
+                                <div class="card h-100">
+
+                                    <div class="card-body">
+
+                                        <!-- Property Name -->
+
+                                        <h5 class="card-title mb-2">
+
+                                            <t
+                                                t-esc="
+                                                    property.name
+                                                    or 'Property'
+                                                "
+                                            />
+
+                                        </h5>
+
+
+                                        <!-- Property Type -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Property Type:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    property.property_type
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Monthly Rent -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Monthly Rent:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    property.price
+                                                    or 0
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Bedrooms -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Bedrooms:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    property.bedrooms
+                                                    or 0
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Deposit -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Deposit:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    property.deposit
+                                                    or 0
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Availability -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Available:
+                                            </strong>
+
+                                            <t t-if="property.available">
+
+                                                <span
+                                                    class="badge bg-success"
+                                                >
+                                                    Available
+                                                </span>
+
+                                            </t>
+
+                                            <t t-else="">
+
+                                                <span
+                                                    class="badge bg-danger"
+                                                >
+                                                    Occupied
+                                                </span>
+
+                                            </t>
+
+                                        </p>
+
+
+                                        <!-- Description -->
+
+                                        <t t-if="property.description">
+
+                                            <p class="mt-2">
+
+                                                <strong>
+                                                    Description:
+                                                </strong>
+
+                                                <br />
+
+                                                <t
+                                                    t-esc="
+                                                        property.description
+                                                    "
+                                                />
+
+                                            </p>
+
+                                        </t>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                </t>
+
+
+                <!-- ================================= -->
+                <!-- No Properties -->
+                <!-- ================================= -->
+
+                <t t-if="not properties">
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div
+                                class="alert alert-info"
+                                role="alert"
+                            >
+
+                                No properties are currently assigned
+                                to you.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </div>
+
+        </t>
+
+    </template>
+
+
+    <!-- ========================================= -->
+    <!-- My Properties Card -->
+    <!-- ========================================= -->
+
+    <template
+        id="portal_my_properties_menu"
+        name="Portal My Home: My Properties"
+        inherit_id="portal.portal_my_home"
+        priority="50"
+    >
+
+        <xpath
+            expr="//div[hasclass('o_portal_docs')]"
+            position="before"
+        >
+
+            <t
+                t-set="portal_service_category_enable"
+                t-value="True"
+            />
+
+        </xpath>
+
+
+        <div
+            id="portal_service_category"
+            position="inside"
+        >
+
+            <t>
+
+                <t t-call="portal.portal_docs_entry">
+
+                    <!-- Icon -->
+
+                    <t
+                        t-set="icon"
+                        t-value="'fa fa-building'"
+                    />
+
+                    <!-- Title -->
+
+                    <t t-set="title">
+                        My Properties
+                    </t>
+
+                    <!-- Description -->
+
+                    <t t-set="text">
+                        View properties assigned to you.
+                    </t>
+
+                    <!-- URL -->
+
+                    <t
+                        t-set="url"
+                        t-value="'/my/properties'"
+                    />
+
+                    <!-- Card -->
+
+                    <t
+                        t-set="config_card"
+                        t-value="True"
+                    />
+
+                    <!-- Counter -->
+
+                    <t
+                        t-set="placeholder_count"
+                        t-value="'property_count'"
+                    />
+
+                </t>
+
+            </t>
+
+        </div>
+
+    </template>
+
+</odoo>

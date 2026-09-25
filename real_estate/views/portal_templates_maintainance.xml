@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- ========================================= -->
+    <!-- My Maintenance Requests Page -->
+    <!-- ========================================= -->
+
+    <template
+        id="portal_my_requests"
+        name="Portal My Maintenance Requests"
+    >
+
+        <t t-call="portal.portal_layout">
+
+            <div class="container mt16 o_portal_portlets">
+
+                <!-- ============================== -->
+                <!-- Header -->
+                <!-- ============================== -->
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <nav class="breadcrumb" aria-label="breadcrumb">
+
+                            <ol class="breadcrumb">
+
+                                <li class="breadcrumb-item">
+                                    <a href="/my/home">
+                                        My Account
+                                    </a>
+                                </li>
+
+                                <li
+                                    class="breadcrumb-item active"
+                                    aria-current="page"
+                                >
+                                    My Maintenance Requests
+                                </li>
+
+                            </ol>
+
+                        </nav>
+
+                        <h1 class="mb16">
+                            My Maintenance Requests
+                        </h1>
+
+                        <!-- Tenant exists -->
+
+                        <t t-if="tenant">
+
+                            <p> Hello <strong>
+                                    <t t-esc="tenant.name" />
+                                </strong>.
+                                Below are your maintenance requests. </p>
+
+                        </t>
+
+                        <!-- No tenant -->
+
+                        <t t-else="">
+
+                            <div
+                                class="alert alert-warning"
+                                role="alert"
+                            >
+                                No tenant record is linked to your user
+                                account. Please contact your property manager.
+                            </div>
+
+                        </t>
+
+                    </div>
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- Maintenance Requests -->
+                <!-- ================================= -->
+
+                <t t-if="maintainance_requests">
+
+                    <div class="row">
+
+                        <t
+                            t-foreach="maintainance_requests"
+                            t-as="maintainance"
+                        >
+
+                            <div class="col-md-6 mb16">
+
+                                <div class="card h-100">
+
+                                    <div class="card-body">
+
+                                        <!-- Request Name -->
+
+                                        <h5 class="card-title mb-2">
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.name
+                                                    or 'Maintenance Request'
+                                                "
+                                            />
+
+                                        </h5>
+
+
+                                        <!-- Issue Type -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Issue Type:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.issue_type
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Property -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Property:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.property_id.name
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Tenant -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Tenant:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.tenant_id.name
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Preferred Date -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Preferred Date:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.preferred_date
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Tenant Phone -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Tenant Phone:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.tenant_phone
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Assigned To -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Assigned To:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.assigned_to.name
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Urgency -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Urgency:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.urgency
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- State -->
+
+                                        <p class="mb-1">
+
+                                            <strong>
+                                                Status:
+                                            </strong>
+
+                                            <t
+                                                t-esc="
+                                                    maintainance.state
+                                                    or 'N/A'
+                                                "
+                                            />
+
+                                        </p>
+
+
+                                        <!-- Description -->
+
+                                        <t t-if="maintainance.description">
+
+                                            <p class="mt-2">
+
+                                                <strong>
+                                                    Description:
+                                                </strong>
+
+                                                <br />
+
+                                                <t
+                                                    t-esc="
+                                                        maintainance.description
+                                                    "
+                                                />
+
+                                            </p>
+
+                                        </t>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                </t>
+
+
+                <!-- ================================= -->
+                <!-- No Requests -->
+                <!-- ================================= -->
+
+                <t t-if="not maintainance_requests">
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div
+                                class="alert alert-info"
+                                role="alert"
+                            >
+                                No maintenance requests were found
+                                for your account.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </div>
+
+        </t>
+
+    </template>
+
+
+    <!-- ========================================= -->
+    <!-- Maintenance Card on Portal Home -->
+    <!-- ========================================= -->
+
+    <template
+        id="portal_my_requests_menu"
+        name="Portal My Home: My Maintenance Requests"
+        inherit_id="portal.portal_my_home"
+        priority="40"
+    >
+
+        <xpath
+            expr="//div[hasclass('o_portal_docs')]"
+            position="before"
+        >
+
+            <t
+                t-set="portal_service_category_enable"
+                t-value="True"
+            />
+
+        </xpath>
+
+
+        <div
+            id="portal_service_category"
+            position="inside"
+        >
+
+            <t>
+
+                <t t-call="portal.portal_docs_entry">
+
+                    <!-- Icon -->
+
+                    <t
+                        t-set="icon"
+                        t-value="'fa fa-wrench'"
+                    />
+
+                    <!-- Title -->
+
+                    <t t-set="title">
+                        My Maintenance Requests
+                    </t>
+
+                    <!-- Description -->
+
+                    <t t-set="text">
+                        View your maintenance requests.
+                    </t>
+
+                    <!-- URL -->
+
+                    <t
+                        t-set="url"
+                        t-value="'/my/requests'"
+                    />
+
+                    <!-- Show as Card -->
+
+                    <t
+                        t-set="config_card"
+                        t-value="True"
+                    />
+
+                    <!-- Counter -->
+
+                    <t
+                        t-set="placeholder_count"
+                        t-value="'maintainance_request_count'"
+                    />
+
+                </t>
+
+            </t>
+
+        </div>
+
+    </template>
+
+</odoo>
