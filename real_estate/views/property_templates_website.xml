@@ -1,0 +1,524 @@
+
+<odoo>
+
+    <template id="property_list" name="Available Properties">
+
+        <t t-call="website.layout">
+
+            <!-- Custom Styling -->
+            <style>
+                .property-hero {
+                    background: linear-gradient(
+                        135deg,
+                        #1f2937,
+                        #374151
+                    );
+                    color: white;
+                    padding: 70px 20px;
+                    border-radius: 0 0 30px 30px;
+                }
+
+                .property-card {
+                    border: none;
+                    border-radius: 18px;
+                    overflow: hidden;
+                    background: #ffffff;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+                    transition: all 0.3s ease;
+                    height: 100%;
+                }
+
+                .property-card:hover {
+                    transform: translateY(-8px);
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+                }
+
+                .property-image-wrapper {
+                    position: relative;
+                    height: 240px;
+                    overflow: hidden;
+                    background: #f3f4f6;
+                }
+
+                .property-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.4s ease;
+                }
+
+                .property-card:hover .property-image {
+                    transform: scale(1.05);
+                }
+
+                .property-badge {
+                    position: absolute;
+                    top: 15px;
+                    left: 15px;
+                    padding: 7px 12px;
+                    border-radius: 20px;
+                    background: rgba(255, 255, 255, 0.95);
+                    font-size: 13px;
+                    font-weight: 600;
+                }
+
+                .property-content {
+                    padding: 22px;
+                }
+
+                .property-title {
+                    font-size: 21px;
+                    font-weight: 600;
+                    color: #1f2937;
+                    margin-bottom: 10px;
+                }
+
+                .property-description {
+                    color: #6b7280;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    min-height: 45px;
+                }
+
+                .property-info {
+                    display: flex;
+                    gap: 20px;
+                    padding: 15px 0;
+                    border-top: 1px solid #eeeeee;
+                    border-bottom: 1px solid #eeeeee;
+                    margin: 15px 0;
+                    color: #6b7280;
+                    font-size: 14px;
+                }
+
+                .property-info span {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+
+                .property-price {
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #111827;
+                }
+
+                .property-price small {
+                    font-size: 13px;
+                    color: #6b7280;
+                    font-weight: 400;
+                }
+
+                .property-button {
+                    border-radius: 10px;
+                    padding: 10px 20px;
+                    font-weight: 600;
+                    transition: all 0.2s ease;
+                }
+
+                .property-button:hover {
+                    transform: translateY(-2px);
+                }
+
+                .no-image {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #9ca3af;
+                    font-size: 15px;
+                }
+            </style>
+
+
+            <!-- Hero Section -->
+            <section class="property-hero">
+
+                <div class="container text-center">
+
+                    <h1 class="display-4 fw-bold mb-3">
+                        Find Your Perfect Property
+                    </h1>
+
+                    <p class="lead mb-0">
+                        Explore our available properties and find the
+                        perfect place for you.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Properties Section -->
+            <section class="py-5">
+
+                <div class="container">
+
+                    <!-- Section Header -->
+                    <div class="text-center mb-5">
+
+                        <h2 class="fw-bold">
+                            Available Properties
+                        </h2>
+
+                        <p class="text-muted">
+                            Discover our latest available properties.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Properties -->
+                    <div class="row g-4">
+
+                        <t t-foreach="properties" t-as="property">
+
+                            <div class="col-xl-4 col-lg-4 col-md-6">
+
+                                <div class="property-card">
+
+
+                                    <!-- Image -->
+                                    <div class="property-image-wrapper">
+
+                                        <img
+                                            t-if="property.image"
+                                            t-att-src="'/web/image/real_estate.property/%s/image' % property.id"
+                                            class="property-image"
+                                            alt="Property Image"
+                                        />
+
+                                        <div
+                                            t-else=""
+                                            class="no-image"
+                                        >
+                                            No Image Available
+                                        </div>
+
+
+                                        <!-- Property Type -->
+                                        <span class="property-badge">
+
+                                            <t t-esc="dict(
+                                                property._fields[
+                                                    'property_type'
+                                                ].selection
+                                            ).get(property.property_type)"
+                                            />
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Content -->
+                                    <div class="property-content">
+
+
+                                        <!-- Title -->
+                                        <h3 class="property-title">
+
+                                            <t t-esc="property.name"/>
+
+                                        </h3>
+
+
+                                        <!-- Description -->
+                                        <p class="property-description">
+
+                                            <t t-if="property.description">
+
+                                                <t t-esc="
+                                                    property.description[
+                                                        :100
+                                                    ]
+                                                "/>
+
+                                                <t t-if="
+                                                    len(property.description)
+                                                    &gt; 100
+                                                ">
+                                                    ...
+                                                </t>
+
+                                            </t>
+
+                                            <t t-else="">
+                                                No description available.
+                                            </t>
+
+                                        </p>
+
+
+                                        <!-- Property Info -->
+                                        <div class="property-info">
+
+                                            <span>
+                                                🛏
+                                                <strong>
+                                                    <t t-esc="
+                                                        property.bedrooms
+                                                    "/>
+                                                </strong>
+                                                Bedrooms
+                                            </span>
+
+                                        </div>
+
+
+                                        <!-- Bottom -->
+                                        <div
+                                            class="d-flex justify-content-between align-items-center"
+                                        >
+
+                                            <!-- Price -->
+                                            <div class="property-price">
+
+                                                <t t-esc="property.price"/>
+
+                                                <small>
+                                                    EGP / Month
+                                                </small>
+
+                                            </div>
+
+
+                                            <!-- Details -->
+                                            <a
+                                                t-att-href="
+                                                    '/property/%s'
+                                                    % property.id
+                                                "
+                                                class="btn btn-primary property-button"
+                                            >
+                                                View Details
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+
+                    <!-- Empty State -->
+                    <t t-if="not properties">
+
+                        <div class="text-center py-5">
+
+                            <h4 class="text-muted">
+                                No properties available
+                            </h4>
+
+                            <p class="text-muted">
+                                Please check again later.
+                            </p>
+
+                        </div>
+
+                    </t>
+
+                </div>
+
+            </section>
+
+        </t>
+
+    </template>
+
+
+    <!-- property details -->
+
+<template id="property_details" name="Property Details">
+
+    <t t-call="website.layout">
+
+        <section class="py-5">
+
+            <div class="container">
+
+                <!-- Back Button -->
+                <div class="mb-4">
+                    <a
+                        href="/properties"
+                        class="btn btn-outline-secondary"
+                    >
+                        ← Back to Properties
+                    </a>
+                </div>
+
+
+                <div class="row g-5">
+
+                    <!-- Property Image -->
+                    <div class="col-lg-7">
+
+                        <div
+                            class="rounded overflow-hidden shadow-sm"
+                            style="height: 500px; background: #f3f4f6;"
+                        >
+
+                            <img
+                                t-if="property.image"
+                                t-att-src="
+                                    '/web/image/real_estate.property/%s/image'
+                                    % property.id
+                                "
+                                class="w-100 h-100"
+                                style="object-fit: cover;"
+                                alt="Property Image"
+                            />
+
+                            <div
+                                t-else=""
+                                class="d-flex align-items-center justify-content-center h-100 text-muted"
+                            >
+                                No Image Available
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Property Information -->
+                    <div class="col-lg-5">
+
+                        <!-- Property Type -->
+                        <span class="badge bg-primary mb-3">
+
+                            <t t-esc="
+                                dict(
+                                    property._fields[
+                                        'property_type'
+                                    ].selection
+                                ).get(property.property_type)
+                            "/>
+
+                        </span>
+
+
+                        <!-- Name -->
+                        <h1 class="fw-bold mb-3">
+
+                            <t t-esc="property.name"/>
+
+                        </h1>
+
+
+                        <!-- Price -->
+                        <h2 class="text-primary fw-bold mb-4">
+
+                            <t t-esc="property.price"/>
+
+                            <small class="text-muted fs-6">
+                                EGP / Month
+                            </small>
+
+                        </h2>
+
+
+                        <!-- Property Info -->
+                        <div class="border-top border-bottom py-3 mb-4">
+
+                            <div class="row">
+
+                                <div class="col-6 mb-3">
+
+                                    <strong>
+                                        Bedrooms
+                                    </strong>
+
+                                    <br/>
+
+                                    <span class="text-muted">
+                                        🛏
+                                        <t t-esc="property.bedrooms"/>
+                                    </span>
+
+                                </div>
+
+
+                                <div class="col-6 mb-3">
+
+                                    <strong>
+                                        Status
+                                    </strong>
+
+                                    <br/>
+
+                                    <span
+                                        t-if="property.available"
+                                        class="text-success"
+                                    >
+                                        Available
+                                    </span>
+
+                                    <span
+                                        t-else=""
+                                        class="text-danger"
+                                    >
+                                        Not Available
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <h4 class="fw-bold mb-3">
+                            Description
+                        </h4>
+
+                        <p
+                            t-if="property.description"
+                            class="text-muted"
+                        >
+                            <t t-esc="property.description"/>
+                        </p>
+
+                        <p
+                            t-else=""
+                            class="text-muted"
+                        >
+                            No description available.
+                        </p>
+
+
+                        <!-- Contact Button -->
+                        <div class="mt-4">
+
+                            <a
+                                href="/contactus"
+                                class="btn btn-primary btn-lg w-100"
+                            >
+                                Contact Us
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </t>
+
+</template>
+ 
+
+
+</odoo>
