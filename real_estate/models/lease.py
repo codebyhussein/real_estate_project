@@ -145,7 +145,7 @@ class Lease(models.Model):
     is_active = fields.Boolean(
         string='Currently Active',
         compute='_compute_is_active',
-        store=True,
+         
     )
 
     next_electric_recharge = fields.Date(
@@ -181,16 +181,13 @@ class Lease(models.Model):
 
     @api.depends('start_date', 'end_date', 'state')
     def _compute_is_active(self):
-        """Check if the lease is currently active."""
+        """Check if lease is currently active"""
         today = fields.Date.today()
-
         for record in self:
-            record.is_active = bool(
-                record.state == 'active'
-                and record.start_date
-                and record.end_date
-                and record.start_date <= today <= record.end_date
-            )
+            if record.state == 'active' and record.start_date and record.end_date:
+                record.is_active = record.start_date <= today <= record.end_date
+            else:
+                record.is_active = False
 
     @api.depends('start_date')
     def _compute_next_electric_recharge(self):
@@ -368,9 +365,14 @@ class Lease(models.Model):
             if record.start_date and record.end_date:
                 if record.end_date <= record.start_date:
                     raise ValidationError("End date must be after start date")
-
-    _sql_constraints = [
-        ('email_unique', 'UNIQUE(email)', 'Email must be unique! This email is already registered.'),
-    ]
+    
+    
+    @api.constrains('deposit_paid','monthly_rent')
+    def _check_price(self):
+        for record in self:
+            if record.deposit_paid and record.monthly_rent:
+                if record.deposit_paid > record.monthly_rent:
+                    raise ValidationError("Deposit can not be grater than price ")
+    
 
 
