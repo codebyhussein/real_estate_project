@@ -1,6 +1,7 @@
 from passlib import context
-from werkzeug.routing import ValidationError
 
+from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 
 class Tenant(models.Model):
@@ -87,7 +88,48 @@ class Tenant(models.Model):
                 raise ValidationError(
                     'Date of birth cannot be in the future.'
                 )
+                
+    # added sql constrains for email address
+    
+    _sql_constraints = [('unique_email', 'UNIQUE(email)', 'Email must be unique! This email is already registered.'),]
+    
+    
+    
+    # create a portal user using button in tenant view 
+    
+    def action_create_portal_user(self):
+        for record in self:
+            if record.user_id:
+                raise UserError(
+                    "This tenant already has a related user."
+                )
 
+            if not record.email:
+                raise UserError(
+                    "Please add an email before creating the portal user."
+                )
+
+            # Check if a user already exists with this email
+            existing_user = self.env['res.users'].sudo().search(
+                [('login', '=', record.email)],
+                limit=1
+            )
+
+            if existing_user:
+                raise UserError(
+                    "A user already exists with this email."
+                )
+
+            portal_group = self.env.ref('base.group_portal')
+
+            user = self.env['res.users'].sudo().create({
+                'name': record.name,
+                'login': record.email,
+                'email': record.email,
+                'groups_id': [(6, 0, [portal_group.id])],
+            })
+
+            record.user_id = user.id
 
 
   
