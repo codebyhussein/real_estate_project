@@ -13,18 +13,18 @@
         <field name="arch" type="xml">
             <tree string="Maintenance Requests">
 
-                <field name="name"/>
-                <field name="lease_id"/>
-                <field name="tenant_id"/>
-                <field name="property_id"/>
-                <field name="issue_type"/>
-                <field name="urgency"/>
-                <field name="assigned_to"/>
-                <field name="preferred_date"/>
-                <field name="scheduled_date"/>
-                <field name="completion_date"/>
-                <field name="actual_cost"/>
-                <field name="state"/>
+                <field name="name" />
+                <field name="lease_id" />
+                <field name="tenant_id" />
+                <field name="property_id" />
+                <field name="issue_type" />
+                <field name="urgency" />
+                <field name="assigned_to" />
+                <field name="preferred_date" />
+                <field name="scheduled_date" />
+                <field name="completion_date" />
+                <field name="actual_cost" />
+                <field name="state" />
 
             </tree>
         </field>
@@ -88,10 +88,10 @@
 
                     <div class="oe_title">
 
-                        <label for="name"/>
+                        <label for="name" />
 
                         <h1>
-                            <field name="name"/>
+                            <field name="name" />
                         </h1>
 
                     </div>
@@ -100,18 +100,18 @@
 
                         <group string="Property Information">
 
-                            <field name="lease_id"/>
-                            <field name="tenant_id" readonly="1"/>
-                            <field name="property_id" readonly="1"/>
-                            <field name="tenant_phone"/>
+                            <field name="lease_id" />
+                            <field name="tenant_id" readonly="1" />
+                            <field name="property_id" readonly="1" />
+                            <field name="tenant_phone" />
 
                         </group>
 
                         <group string="Maintenance Information">
 
-                            <field name="issue_type"/>
-                            <field name="urgency"/>
-                            <field name="assigned_to"/>
+                            <field name="issue_type" />
+                            <field name="urgency" />
+                            <field name="assigned_to" />
 
                         </group>
 
@@ -130,15 +130,15 @@
 
                         <group>
 
-                            <field name="preferred_date"/>
-                            <field name="scheduled_date"/>
-                            <field name="completion_date"/>
+                            <field name="preferred_date" />
+                            <field name="scheduled_date" />
+                            <field name="completion_date" />
 
                         </group>
 
                         <group>
 
-                            <field name="actual_cost"/>
+                            <field name="actual_cost" />
 
                         </group>
 
@@ -148,9 +148,9 @@
 
                 <div class="oe_chatter">
 
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
 
                 </div>
 
@@ -172,16 +172,16 @@
         <field name="arch" type="xml">
             <search string="Search Maintenance Requests">
 
-                <field name="name"/>
-                <field name="lease_id"/>
-                <field name="tenant_id"/>
-                <field name="property_id"/>
-                <field name="issue_type"/>
-                <field name="urgency"/>
-                <field name="assigned_to"/>
-                <field name="state"/>
+                <field name="name" />
+                <field name="lease_id" />
+                <field name="tenant_id" />
+                <field name="property_id" />
+                <field name="issue_type" />
+                <field name="urgency" />
+                <field name="assigned_to" />
+                <field name="state" />
 
-                <separator/>
+                <separator />
 
                 <filter
                     name="high_urgency"
@@ -207,7 +207,7 @@
                     domain="[('state', '=', 'completed')]"
                 />
 
-                <separator/>
+                <separator />
 
                 <group expand="0" string="Group By">
 
@@ -259,19 +259,31 @@
         </field>
 
     </record>
+    <!-- cron -->
 
- 
-         <record id="ir_cron_auto_urgency" model="ir.cron">
+    <record id="ir_cron_auto_urgency" model="ir.cron">
         <field name="name">Real Estate: Auto Urgency</field>
-        <field name="model_id" ref="model_maintenance_request"/>
+        <field name="model_id" ref="model_maintenance_request" />
         <field name="state">code</field>
         <field name="code">model._cron_auto_complete_maintenance_requests()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
-        <field name="doall" eval="False"/>
-        <field name="active" eval="True"/>
-    </record> 
+        <field name="doall" eval="False" />
+        <field name="active" eval="True" />
+    </record>
+
+
+    <record id="ir_cron_maintenance_email_reminder" model="ir.cron">
+        <field name="name">Maintenance Request Email Reminder</field>
+        <field name="model_id" ref="real_estate.model_maintenance_request" />
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_send_email_reminder_maintenance_requests()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
     <!-- =========================================================
          Maintenance Request Action
     ========================================================== -->
@@ -289,7 +301,5 @@
 
     </record>
 
-
- 
 
 </odoo>

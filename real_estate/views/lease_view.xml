@@ -67,6 +67,15 @@
                         class="oe_highlight"
                         invisible="state == 'cancelled'"
                     />
+                                        <button
+                        name="send_reminder_email"
+                        string="Send Email"
+                        type="object"
+                        class="oe_highlight"
+                         
+                    />
+
+                
 
                     <field
                         name="state"
@@ -104,6 +113,7 @@
                             <field name="duration_months"/>
                             <field name="is_active"/>
                             <field name="next_electric_recharge"/>
+                            <field name='next_payment_date'/>
                         </group>
 
                     </group>
@@ -326,6 +336,21 @@
         <field name="model_id" ref="model_real_estate_lease"/>
         <field name="state">code</field>
         <field name="code">model._cron_auto_expire_leases()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+
+
+
+         <record id="ir_cron_auto_email_send" model="ir.cron">
+        <field name="name">Real Estate: Auto Send Email</field>
+        <field name="model_id" ref="model_real_estate_lease"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_email()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
