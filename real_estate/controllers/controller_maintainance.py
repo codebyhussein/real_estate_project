@@ -1,6 +1,6 @@
 from odoo import http
 from odoo.http import request
-from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.portal.controllers.portal import CustomerPortal # type: ignore
 
 
 class RealEstateMaintainancePortal(CustomerPortal):

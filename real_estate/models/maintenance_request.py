@@ -100,9 +100,9 @@ class MaintenanceRequest(models.Model):
 
     tenant_phone = fields.Char(
         string='Tenant Phone',
-        related='tenant_id.phone',
+        
         store=True,
-        readonly=True,
+         
     )
 
     state = fields.Selection(
@@ -178,3 +178,35 @@ class MaintenanceRequest(models.Model):
                  
                 'scheduled_date': today+timedelta(days=1),
             })
+            
+ 
+    def _cron_auto_send_email_reminder_maintenance_requests(self):
+        today = fields.Date.today()
+        tomorrow = today + timedelta(days=1)
+
+        maintenance_requests = self.search([
+            ('preferred_date', '=', tomorrow),
+            
+        ])
+
+        template = self.env.ref(
+            'real_estate.email_template_maintenance_upcoming',
+            raise_if_not_found=False
+        )
+
+        if not template:
+            return
+
+        for request in maintenance_requests:
+            if request.assigned_to and request.assigned_to.email:
+                template.send_mail(
+                    request.id,
+                    force_send=True
+                )
+        
+        
+        
+    
+    
+    
+     
