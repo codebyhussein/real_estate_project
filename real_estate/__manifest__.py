@@ -54,6 +54,8 @@ Long description of module's purpose
     'views/portal_templates_property.xml',
     'views/maintanace_view.xml',
     'views/property_templates_website.xml',
+    'data/mail_template_data.xml',
+    'views/res_partner.xml',
     'views/payment.xml',
 
     # Menus
