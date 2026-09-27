@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_lease_summary">
+
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="lease">
+
+                <t t-call="web.external_layout">
+
+                    <div class="page lease-report">
+
+                        <style>
+
+                            /* ==============================
+                               GENERAL
+                            ============================== */
+
+                            .lease-report {
+                                font-size: 12px;
+                                color: #374151;
+                                line-height: 1.5;
+                                background: #f8fafc;
+                                padding: 8px 0;
+                            }
+
+                            .lease-report * {
+                                box-sizing: border-box;
+                            }
+
+
+                            /* ==============================
+                               HEADER
+                            ============================== */
+
+                            .lease-header {
+                                background: #26364f;
+                                color: #ffffff;
+                                padding: 22px 24px;
+                                border-radius: 10px;
+                                margin-bottom: 20px;
+                            }
+
+                            .lease-header-title {
+                                font-size: 25px;
+                                font-weight: 700;
+                                margin: 0;
+                                letter-spacing: 0.2px;
+                            }
+
+                            .lease-reference {
+                                margin-top: 5px;
+                                font-size: 13px;
+                                color: #dbe4f0;
+                            }
+
+                            .lease-header-meta {
+                                text-align: right;
+                            }
+
+
+                            /* ==============================
+                               STATUS
+                            ============================== */
+
+                            .status-badge {
+                                display: inline-block;
+                                padding: 6px 12px;
+                                border-radius: 20px;
+                                background: #e8f5e9;
+                                color: #2e7d32;
+                                font-size: 10px;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                letter-spacing: 0.6px;
+                                border: 1px solid rgba(46, 125, 50, 0.15);
+                            }
+
+
+                            /* ==============================
+                               SECTION
+                            ============================== */
+
+                            .section {
+                                margin-top: 22px;
+                            }
+
+                            .section-title {
+                                font-size: 16px;
+                                font-weight: 700;
+                                color: #26364f;
+                                margin-bottom: 10px;
+                                padding-bottom: 7px;
+                                border-bottom: 2px solid #e5e7eb;
+                            }
+
+
+                            /* ==============================
+                               INFORMATION CARDS
+                            ============================== */
+
+                            .info-card {
+                                border: 1px solid #e1e5ea;
+                                border-radius: 8px;
+                                background: #ffffff;
+                                padding: 15px 17px;
+                                min-height: 135px;
+                            }
+
+                            .info-item {
+                                margin-bottom: 11px;
+                            }
+
+                            .info-item:last-child {
+                                margin-bottom: 0;
+                            }
+
+                            .info-label {
+                                display: block;
+                                color: #6b7280;
+                                font-size: 10px;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 2px;
+                            }
+
+                            .info-value {
+                                color: #1f2937;
+                                font-size: 12px;
+                                font-weight: 600;
+                            }
+
+
+                            /* ==============================
+                               KPI CARDS
+                            ============================== */
+
+                            .kpi-card {
+                                border: 1px solid #e1e5ea;
+                                border-radius: 8px;
+                                background: #ffffff;
+                                padding: 16px;
+                                min-height: 105px;
+                            }
+
+                            .kpi-title {
+                                font-size: 10px;
+                                font-weight: 700;
+                                color: #6b7280;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 7px;
+                            }
+
+                            .kpi-value {
+                                font-size: 22px;
+                                font-weight: 700;
+                                color: #26364f;
+                            }
+
+                            .kpi-description {
+                                margin-top: 3px;
+                                color: #9ca3af;
+                                font-size: 10px;
+                            }
+
+
+                            /* ==============================
+                               TABLES
+                            ============================== */
+
+                            .report-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 8px;
+                                border: 1px solid #e1e5ea;
+                            }
+
+                            .report-table thead {
+                                display: table-header-group;
+                            }
+
+                            .report-table thead th {
+                                background: #f1f4f8;
+                                color: #374151;
+                                font-size: 9px;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                letter-spacing: 0.4px;
+                                padding: 9px 7px;
+                                border-bottom: 1px solid #dfe3e8;
+                            }
+
+                            .report-table tbody td {
+                                padding: 8px 7px;
+                                border-bottom: 1px solid #edf0f3;
+                                color: #374151;
+                                font-size: 10px;
+                                vertical-align: middle;
+                            }
+
+                            .report-table tbody tr:last-child td {
+                                border-bottom: none;
+                            }
+
+                            .report-table tbody tr:nth-child(even) {
+                                background: #fafbfc;
+                            }
+
+                            .text-right {
+                                text-align: right;
+                            }
+
+                            .text-center {
+                                text-align: center;
+                            }
+
+
+                            /* ==============================
+                               TABLE BADGES
+                            ============================== */
+
+                            .table-status {
+                                display: inline-block;
+                                padding: 3px 7px;
+                                border-radius: 10px;
+                                background: #eef2f7;
+                                color: #4b5563;
+                                font-size: 8px;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                            }
+
+
+                            /* ==============================
+                               EMPTY STATE
+                            ============================== */
+
+                            .empty-state {
+                                border: 1px dashed #d6dbe1;
+                                border-radius: 8px;
+                                background: #fafbfc;
+                                padding: 18px;
+                                text-align: center;
+                                color: #9ca3af;
+                                font-size: 11px;
+                            }
+
+
+                            /* ==============================
+                               FOOTER
+                            ============================== */
+
+                            .report-footer {
+                                margin-top: 30px;
+                                padding-top: 10px;
+                                border-top: 1px solid #e5e7eb;
+                                color: #9ca3af;
+                                font-size: 9px;
+                            }
+
+                        </style>
+
+
+                        <!-- ==========================================
+                             HEADER
+                        =========================================== -->
+
+                        <div class="lease-header">
+
+                            <div class="row">
+
+                                <div class="col-8">
+
+                                    <div class="lease-header-title">
+                                        Lease Summary
+                                    </div>
+
+                                    <div class="lease-reference">
+                                        <span t-field="lease.name" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-4 lease-header-meta">
+
+                                    <span class="status-badge" t-field="lease.state" />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             LEASE INFORMATION
+                        =========================================== -->
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Lease Information
+                            </div>
+
+                            <div class="row">
+
+                                <!-- Property / Tenant -->
+
+                                <div class="col-6">
+
+                                    <div class="info-card">
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                Property
+                                            </span>
+
+                                            <span class="info-value">
+                                                <span t-field="lease.property_id" />
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                Tenant
+                                            </span>
+
+                                            <span class="info-value">
+                                                <span t-field="lease.tenant_id" />
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                Monthly Rent
+                                            </span>
+
+                                            <span class="info-value">
+
+                                                <span t-field="lease.monthly_rent"
+                                                    t-options="{
+                                                          'widget': 'monetary',
+                                                          'display_currency': res_company.currency_id
+                                                      }" />
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Dates -->
+
+                                <div class="col-6">
+
+                                    <div class="info-card">
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                Start Date
+                                            </span>
+
+                                            <span class="info-value">
+                                                <span t-field="lease.start_date" />
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                End Date
+                                            </span>
+
+                                            <span class="info-value">
+                                                <span t-field="lease.end_date" />
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="info-item">
+
+                                            <span class="info-label">
+                                                Status
+                                            </span>
+
+                                            <span class="info-value">
+
+                                                <span class="status-badge" t-field="lease.state" />
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             SUMMARY
+                        =========================================== -->
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Lease Overview
+                            </div>
+
+                            <div class="row">
+
+                                <!-- Activity -->
+
+                                <div class="col-6">
+
+                                    <div class="kpi-card">
+
+                                        <div class="kpi-title">
+                                            Lease Activity
+                                        </div>
+
+                                        <div class="kpi-value">
+
+                                            <span t-esc="round(active_rate, 2)" /> % </div>
+
+                                        <div class="kpi-description">
+                                            Active lease rate in this selection
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Maintenance -->
+
+                                <div class="col-6">
+
+                                    <div class="kpi-card">
+
+                                        <div class="kpi-title">
+                                            Maintenance Costs
+                                        </div>
+
+                                        <div class="kpi-value">
+
+                                            <span t-esc="maintenance_costs.get(lease.id, 0.0)"
+                                                t-options="{
+                                                      'widget': 'monetary',
+                                                      'display_currency': res_company.currency_id
+                                                  }" />
+
+                                        </div>
+
+                                        <div class="kpi-description">
+                                            Maintenance costs during the last 6 months
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             PAYMENTS
+                        =========================================== -->
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Payment History
+                            </div>
+
+                            <t t-set="lease_payments" t-value="payments_by_lease.get(lease.id, [])" />
+
+
+                            <t t-if="lease_payments">
+
+                                <table class="report-table">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                Reference
+                                            </th>
+
+                                            <th>
+                                                Due Date
+                                            </th>
+
+                                            <th>
+                                                Payment Date
+                                            </th>
+
+                                            <th>
+                                                Method
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                            <th class="text-right">
+                                                Amount
+                                            </th>
+
+                                            <th class="text-right">
+                                                Late Fee
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+                                        <t t-foreach="lease_payments" t-as="payment">
+
+                                            <tr>
+
+                                                <td>
+                                                    <strong>
+                                                        <span t-field="payment.name" />
+                                                    </strong>
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="payment.due_date" />
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="payment.payment_date" />
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="payment.payment_method" />
+                                                </td>
+
+                                                <td>
+
+                                                    <span class="table-status"
+                                                        t-field="payment.state" />
+
+                                                </td>
+
+                                                <td class="text-right">
+
+                                                    <span t-field="payment.amount"
+                                                        t-options="{
+                                                              'widget': 'monetary',
+                                                              'display_currency': res_company.currency_id
+                                                          }" />
+
+                                                </td>
+
+                                                <td class="text-right">
+
+                                                    <span t-field="payment.late_fee"
+                                                        t-options="{
+                                                              'widget': 'monetary',
+                                                              'display_currency': res_company.currency_id
+                                                          }" />
+
+                                                </td>
+
+                                            </tr>
+
+                                        </t>
+
+                                    </tbody>
+
+                                </table>
+
+                            </t>
+
+
+                            <t t-else="">
+
+                                <div class="empty-state">
+                                    No payments have been recorded for this lease.
+                                </div>
+
+                            </t>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             MAINTENANCE
+                        =========================================== -->
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Maintenance History
+                            </div>
+
+
+                            <t t-set="lease_maintenance" t-value="maintenance_by_lease.get(lease.id, [])" />
+
+                            <t t-if="lease_maintenance">
+
+                                <table class="report-table">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                Reference
+                                            </th>
+
+                                            <th>
+                                                Issue
+                                            </th>
+
+                                            <th>
+                                                Urgency
+                                            </th>
+
+                                            <th>
+                                                Preferred Date
+                                            </th>
+
+                                            <th>
+                                                Scheduled
+                                            </th>
+
+                                            <th>
+                                                Completed
+                                            </th>
+
+                                            <th>
+                                                Assigned To
+                                            </th>
+
+                                            <th class="text-right">
+                                                Actual Cost
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+                                        <t t-foreach="lease_maintenance" t-as="man">
+
+                                            <tr>
+
+                                                <td>
+                                                    <strong>
+                                                        <span t-field="man.name" />
+                                                    </strong>
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="man.issue_type" />
+                                                </td>
+
+                                                <td>
+
+                                                    <span class="table-status" t-field="man.urgency" />
+
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="man.preferred_date" />
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="man.scheduled_date" />
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="man.completion_date" />
+                                                </td>
+
+                                                <td>
+                                                    <span t-field="man.assigned_to" />
+                                                </td>
+
+                                                <td class="text-right">
+
+                                                    <span t-field="man.actual_cost"
+                                                        t-options="{
+                                                              'widget': 'monetary',
+                                                              'display_currency': res_company.currency_id
+                                                          }" />
+
+                                                </td>
+
+                                            </tr>
+
+                                        </t>
+
+                                    </tbody>
+
+                                </table>
+
+                            </t>
+
+
+                            <t t-else="">
+
+                                <div class="empty-state">
+                                    No maintenance requests have been recorded for this lease.
+                                </div>
+
+                            </t>
+
+                        </div>
+
+
+                        <!-- ==========================================
+                             FOOTER
+                        =========================================== -->
+
+                        <div class="report-footer">
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    Lease Management Report
+                                </div>
+
+                                <div class="col-6 text-right"> Generated on <span
+                                        t-esc="
+                                        context_timestamp(
+                                            datetime.datetime.now()
+                                        ).strftime('%Y-%m-%d %H:%M')
+                                    " />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+        </t>
+
+    </template>
+
+</odoo>
