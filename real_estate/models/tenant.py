@@ -21,6 +21,14 @@ class Tenant(models.Model):
     active = fields.Boolean(string='Active', default=True)
     user_id = fields.Many2one('res.users', string='Related User', index=True)
     lease_ids =fields.One2many('real_estate.lease','tenant_id' ,string='Leases')
+    
+    
+    company_type = fields.Selection([
+        ('individual', 'Individual'),
+        ('company', 'Company'),
+    ], string='Company Type', default='individual')
+ 
+    
     property_type= fields.Selection([
         ('apartment', 'Apartment'),
         ('house', 'House'),
@@ -35,6 +43,7 @@ class Tenant(models.Model):
         ('C', '61 - 80'),
         ('D', '81 - 100')
     ], string='Age Category',)
+    age = fields.Integer(string='Age', compute='_compute_age', store=True)
 
 
     def update_notes(self,):
@@ -130,7 +139,16 @@ class Tenant(models.Model):
             })
 
             record.user_id = user.id
-
+    def _compute_age(self):
+        for record in self:
+            if record.date_of_birth:
+                today = fields.Date.today()
+                age = today.year - record.date_of_birth.year - (
+                    (today.month, today.day) < (record.date_of_birth.month, record.date_of_birth.day)
+                )
+                record.age = age
+            else:
+                record.age = 0
 
   
 

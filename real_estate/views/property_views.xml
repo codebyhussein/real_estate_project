@@ -99,7 +99,7 @@
                         type="object"
                         class="oe_highlight"
                     />
-
+                    <button name='action_property' string='View Property Summary' type='object'/>
                     <field name="available" invisible="1"/>
 
                     <button

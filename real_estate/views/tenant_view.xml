@@ -69,6 +69,7 @@
                 </header>
 
                 <sheet>
+                    <field name="company_type" widget="radio" options="{'horizontal': true}"/>
 
                     <div class="oe_title">
 
@@ -95,11 +96,12 @@
                         <group string="Additional Information">
 
                             <field name="date_joined" />
-                            <field name="date_of_birth" />
+                            <field name="date_of_birth" invisible="company_type == 'company'" />
                             <field name="active" />
                             <field name="led_id" />
-                            <field name="age_categroy" />
+                            <field name="age_categroy" invisible="company_type == 'company'"/>
                             <field name="user_id" />
+                            <field name="age" invisible="company_type == 'company'" />
 
                         </group>
 

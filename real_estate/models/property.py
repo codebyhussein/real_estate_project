@@ -104,4 +104,10 @@ class Property(models.Model):
             record.write({
                 'description': record.agent_id.name
             })
+            
+            
+    def action_property(self):
+        self.ensure_one()
+        return self.env.ref('real_estate.action_report_property_summary').report_action(self)
+
 
