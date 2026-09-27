@@ -56,6 +56,9 @@ Long description of module's purpose
     'views/property_templates_website.xml',
     'data/mail_template_data.xml',
     'views/res_partner.xml',
+    'report/property_report.xml',
+    'report/lease_report.xml',
+    'report/report.xml',
     'views/payment.xml',
 
     # Menus
