@@ -60,6 +60,13 @@ class Property(models.Model):
         string='Leases'
     )
 
+    payment_ids = fields.One2many(
+        'lease.payment',
+        'property_id',
+        string='Payments'
+    )
+    
+
     def mark_as_occupied(self):
         for record in self:
             record.write({
@@ -110,4 +117,9 @@ class Property(models.Model):
         self.ensure_one()
         return self.env.ref('real_estate.action_report_property_summary').report_action(self)
 
-
+    def action_export_excel(self):
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/real_estate/property/excel_export/{self.id}',
+            'target': 'self',
+        }

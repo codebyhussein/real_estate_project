@@ -40,6 +40,7 @@ class LeasePayment(models.Model):
     notes = fields.Text(string='Notes')
     
     
+    
  
     
     @api.model
