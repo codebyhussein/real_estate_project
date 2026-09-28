@@ -108,6 +108,7 @@
                         type="action"
                         context="{'default_property_id': active_id, 'default_monthly_rent': price}"
                     />
+                    <button name="action_export_excel" string="Download Excel Report" type="object" class="btn-primary"/>
 
                 </header>
 
