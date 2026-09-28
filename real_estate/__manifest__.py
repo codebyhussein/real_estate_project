@@ -38,6 +38,8 @@ Long description of module's purpose
     'wizard/maintenance.xml',
     'wizard/lease_wizard.xml',
     'wizard/tenant_wizard.xml',
+    'wizard/rent_roll_wizard_views.xml',
+    'wizard/maintenance_report_wizard.xml',
 
     # Views
     'views/property_views.xml',
@@ -60,6 +62,8 @@ Long description of module's purpose
     'report/lease_report.xml',
     'report/report.xml',
     'views/payment.xml',
+    
+
 
     # Menus
     'views/menu.xml',
