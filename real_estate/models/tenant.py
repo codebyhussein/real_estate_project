@@ -1,3 +1,5 @@
+from email.policy import default
+
 from passlib import context
 
 from odoo.exceptions import UserError
@@ -23,6 +25,7 @@ class Tenant(models.Model):
     lease_ids =fields.One2many('real_estate.lease','tenant_id' ,string='Leases')
     
     external_id=fields.Text()
+    created_by_api=fields.Boolean(string='Create By Api', default=False)
     
     
     company_type = fields.Selection([
@@ -34,6 +37,7 @@ class Tenant(models.Model):
     property_type= fields.Selection([
         ('apartment', 'Apartment'),
         ('house', 'House'),
+        ('villa', 'Villa'),
         ('commercial', 'Commercial'),
         ('land', 'Land'),       ], string='Property Type',required=True) 
 

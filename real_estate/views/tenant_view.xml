@@ -176,6 +176,11 @@
                     name="unavailable"
                     domain="[('active', '=', False)]"
                 />
+                                <filter
+                    string="Create BY Api"
+                    name="created_by_api"
+                    domain="[('created_by_api', '=', True)]"
+                />
 
                 <separator />
 
