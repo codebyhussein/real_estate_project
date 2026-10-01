@@ -22,6 +22,8 @@ class Tenant(models.Model):
     user_id = fields.Many2one('res.users', string='Related User', index=True)
     lease_ids =fields.One2many('real_estate.lease','tenant_id' ,string='Leases')
     
+    external_id=fields.Text()
+    
     
     company_type = fields.Selection([
         ('individual', 'Individual'),

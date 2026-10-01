@@ -1,4 +1,6 @@
 
+from email.policy import default
+
 from odoo import models, fields
 
 
@@ -39,8 +41,10 @@ class Property(models.Model):
 
     agent_id = fields.Many2one(
         'res.users',
-        string='Sales Person'
+        string='Sales Person',
+        default=lambda self:self.env.user
     )
+    external_id=fields.Text(string='External Id')
 
     property_type = fields.Selection([
         ('apartment', 'Apartment'),
