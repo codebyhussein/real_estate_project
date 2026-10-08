@@ -17,3 +17,4 @@ access_lease_wizard,lease.wizard,model_real_estate_lease_wizard,,1,1,1,1
 access_lease_payment_user,access.lease.payment.user,model_lease_payment,base.group_user,1,1,1,1
 access_rent_roll_wizard,rent.roll.wizard,model_rent_roll_wizard,base.group_user,1,1,1,1
 access_maintenance_report_wizard,maintenance.report.wizard,model_maintenance_report_wizard,base.group_user,1,1,1,1
+access_lease_form,lease.form,model_lead_form,base.group_user,1,1,1,1

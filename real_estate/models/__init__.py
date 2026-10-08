@@ -10,3 +10,4 @@ from . import property_inherit
 from . import lease_inherit
 from . import payment
 from . import res_partnar
+from . import crm_lead 
